@@ -19,7 +19,7 @@ This document outlines the static IP configuration applied to each virtual machi
 |---|---|---|---|---|
 | Ubuntu Server | Ubuntu Server 24 | 192.168.100.10 | 255.255.255.0 | SIEM Server (Wazuh) |
 | Windows 11 | Windows 11 Home | 192.168.100.20 | 255.255.255.0 | Target Endpoint |
-| Kali Linux | Kali Linux | 192.168.100.30 | 255.255.255.0 | Attack Machine |
+| Kali Linux | Kali Linux 2025.4 | 192.168.100.30 | 255.255.255.0 | Attack Machine |
 
 ## Connectivity Verification
 
