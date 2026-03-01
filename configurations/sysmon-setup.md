@@ -2,8 +2,6 @@
 
 This document covers the installation, configuration, and verification of the Wazuh agent on the Windows 11 target endpoint. The Wazuh agent is responsible for collecting security logs and telemetry from the endpoint and forwarding them in real time to the Wazuh Manager running on Ubuntu Server at 192.168.100.10.
 
----
-
 ## Agent Overview
 
 | Property | Value |
@@ -13,15 +11,11 @@ This document covers the installation, configuration, and verification of the Wa
 | Agent Name | Windows_11 |
 | Communication Port | 1514 (UDP) |
 
----
-
 ## Prerequisites
 
 Before installing the agent, the Windows VM network adapter was temporarily switched from the **LAN Segment** to **NAT** in VMware settings to allow internet access for downloading the agent package from packages.wazuh.com. After installation the adapter was immediately switched back to the **LAN Segment** to restore network isolation.
 
 This is required because the isolated LAN Segment has no internet access by design, preventing direct download from the Wazuh package repository.
-
----
 
 ## Installation
 
@@ -36,8 +30,6 @@ The dashboard generates a custom PowerShell command with the Wazuh Manager IP pr
 ```powershell
 Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.14.3-1.msi -OutFile $env:tmp\wazuh-agent; msiexec.exe /i $env:tmp\wazuh-agent /q WAZUH_MANAGER='192.168.100.10' WAZUH_AGENT_NAME='Windows_11'
 ```
-
----
 
 ## Starting the Agent Service
 
@@ -57,13 +49,9 @@ Set-Service -Name "WazuhSvc" -StartupType Automatic
 
 ![Sysmon Service Started](../images/sysmon-status.png)
 
----
-
 ## Verifying Agent Connectivity
 
 After switching the network adapter back to the LAN Segment, agent connectivity to the Wazuh Manager was verified through the Wazuh Dashboard on the Ubuntu Server. The Windows 11 agent appears as **Active** in the agent list.
-
----
 
 ## Verifying Sysmon Log Collection
 
@@ -80,8 +68,6 @@ The screenshot below shows the Wazuh Threat Hunting events page filtered by `rul
 The screenshot below shows an individual Sysmon event expanded to display its full detail. The `rule.groups: sysmon` and `data.win.system.channel: Microsoft-Windows-Sysmon/Operational` fields confirm the event originated from Sysmon on the Windows 11 endpoint and was correctly parsed and categorized by the Wazuh Manager.
 
 ![Sysmon Events Detailed](../images/sysmon-logs.png)
-
----
 
 ## Troubleshooting Encountered
 
@@ -128,8 +114,6 @@ Restart-Service WazuhSvc
 
 Sysmon events began appearing in the Wazuh dashboard immediately after the restart.
 
----
-
 ## Agent Log Location
 
 The Wazuh agent logs on Windows are located at:
@@ -143,8 +127,6 @@ These logs can be checked for connection errors or communication issues with the
 ```powershell
 type "C:\Program Files (x86)\ossec-agent\ossec.log"
 ```
-
----
 
 ## Configuration Notes
 
