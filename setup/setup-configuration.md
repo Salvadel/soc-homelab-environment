@@ -100,5 +100,5 @@ These snapshots serve as clean restore points that can be used to roll back the 
 
 - Total RAM allocated across all three VMs is 12GB, leaving approximately 6GB of headroom on top of the host OS's normal usage of 14GB
 - Storage was allocated generously on Ubuntu Server (80GB) to accommodate Wazuh log and alert data accumulation over time
-- All VMs use static IP addresses — DHCP is disabled on the LAN Segment to ensure consistent addressing for Wazuh agent-to-manager communication
+- All VMs use static IP addresses, DHCP is disabled on the LAN Segment to ensure consistent addressing for Wazuh agent-to-manager communication
 
