@@ -2,8 +2,6 @@
 
 This document covers the VMware Workstation setup and configuration for the SOC homelab, including virtual machine hardware specifications, network isolation setup, and security hardening of the VM environment. All three virtual machines are hosted on a single physical machine running VMware Workstation with 32GB RAM.
 
-## VMWare Workstation Download
-
 - [Download VMware Workstation](https://www.vmware.com/products/workstation-pro.html)
 
 ## Host Machine Specifications
