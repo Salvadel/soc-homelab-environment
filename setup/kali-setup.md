@@ -16,7 +16,7 @@ This document covers the installation and configuration of the Kali Linux virtua
 
 ## Installation
 
-Kali Linux was installed as a virtual machine in VMware Workstation using the official Kali Linux ISO. During installation default settings were accepted with the exception of the network configuration which was set to the isolated LAN Segment after installation was complete.
+Kali Linux was installed as a virtual machine in VMware Workstation using the official Kali Linux ISO. During installation default settings were accepted with the exception of the network configuration which was set to the isolated LAN Segment after installation was complete. The official Kali Linux ISO can be downloaded from the [Kali Linux official download page](https://www.kali.org/get-kali/).
 
 ### Kali Desktop
 
@@ -44,7 +44,6 @@ The screenshot below shows the output of `ip a` confirming the static IP address
 ## System Update
 
 After installation, the system package list and all installed packages were updated to ensure the latest libraries and security patches are in place before use in the lab.
-
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
@@ -56,7 +55,6 @@ The screenshot below shows the terminal output confirming all packages are up to
 After static IP assignment, connectivity to both other VMs on the LAN Segment was verified using ping to confirm the isolated network is functioning correctly.
 
 ### Kali → Windows 11
-
 ```bash
 ping 192.168.100.20
 ```
@@ -64,10 +62,10 @@ ping 192.168.100.20
 ![Windows 11 Ping Test](../images/ping-test-kali-to-windows.png)
 
 ### Kali → Ubuntu Server
-
 ```bash
 ping 192.168.100.10
 ```
+
 ![Ubuntu Server Ping Test](../images/ping-test-kali-to-server.png)
 
 ## Role in Lab Exercises
