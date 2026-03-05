@@ -13,7 +13,9 @@ This document covers the installation, configuration, and verification of the Wa
 
 ## Prerequisites
 
-Before installing the agent, the Windows VM network adapter was temporarily switched from the **LAN Segment** to **NAT** in VMware settings to allow internet access for downloading the agent package from packages.wazuh.com. After installation, the adapter was immediately switched back to the **LAN Segment** to restore network isolation.
+Before installing the agent, ensure the Wazuh stack is fully installed and operational on Ubuntu Server. Full installation details are documented in [Wazuh Setup](wazuh-setup.md).
+
+The Windows VM network adapter was temporarily switched from the **LAN Segment** to **NAT** in VMware settings to allow internet access for downloading the agent package from packages.wazuh.com. After installation, the adapter was immediately switched back to the **LAN Segment** to restore network isolation.
 
 This is required because the isolated LAN Segment has no internet access by design, preventing direct download from the Wazuh package repository.
 
@@ -24,7 +26,7 @@ The Wazuh agent was deployed through the Wazuh Dashboard on Ubuntu Server. Navig
 Agents > Deploy New Agent > Windows
 ```
 
-The dashboard generates a custom PowerShell command with the Wazuh Manager IP pre-configured. The command was run in PowerShell as Administrator on the Windows 11 VM. Full Wazuh installation details are documented in [Wazuh Setup](wazuh-setup.md).
+The dashboard generates a custom PowerShell command with the Wazuh Manager IP pre-configured. The command was run in PowerShell as Administrator on the Windows 11 VM:
 ```powershell
 Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.14.3-1.msi -OutFile $env:tmp\wazuh-agent; msiexec.exe /i $env:tmp\wazuh-agent /q WAZUH_MANAGER='192.168.100.10' WAZUH_AGENT_NAME='Windows_11'
 ```
