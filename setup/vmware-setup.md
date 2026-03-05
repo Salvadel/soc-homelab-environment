@@ -1,6 +1,10 @@
-# VMware Configuration
+# VMware Setup
 
-This document covers the VMware Workstation configuration for the SOC homelab, including virtual machine hardware specifications, network isolation setup, and security hardening of the VM environment. All three virtual machines are hosted on a single physical machine running VMware Workstation with 32GB RAM.
+This document covers the VMware Workstation setup and configuration for the SOC homelab, including virtual machine hardware specifications, network isolation setup, and security hardening of the VM environment. All three virtual machines are hosted on a single physical machine running VMware Workstation with 32GB RAM.
+
+## VMWare Workstation Download
+
+- [Download VMware Workstation](https://www.vmware.com/products/workstation-pro.html)
 
 ## Host Machine Specifications
 
@@ -23,7 +27,7 @@ A LAN Segment was chosen over NAT or Bridged networking specifically because it 
 
 ### Windows 11 Home
 
-The screenshot below shows the Windows 11 VM hardware configuration, including memory, processor allocation, and network adapter assignment to the isolated LAN Segment.
+The screenshot below shows the Windows 11 VM hardware configuration, including memory, processor allocation, and network adapter assignment to the isolated LAN Segment. For full Windows 11 installation and configuration details see [Windows 11 Setup](windows11-setup.md).
 
 ![Windows 11 Configuration](../images/vmware-windows-network.png)
 
@@ -39,7 +43,7 @@ The screenshot below shows the Windows 11 VM hardware configuration, including m
 
 ### Kali Linux
 
-The screenshot below shows the Kali Linux VM hardware configuration, including memory, processor allocation, and network adapter assignment to the isolated LAN Segment.
+The screenshot below shows the Kali Linux VM hardware configuration, including memory, processor allocation, and network adapter assignment to the isolated LAN Segment. For full Kali Linux installation and configuration details see [Kali Linux Setup](kali-setup.md).
 
 ![Kali Linux Configuration](../images/vmware-kali-network.png)
 
@@ -55,7 +59,7 @@ The screenshot below shows the Kali Linux VM hardware configuration, including m
 
 ### Ubuntu Server
 
-The screenshot below shows the Ubuntu Server VM hardware configuration, including memory, processor allocation, and network adapter assignment to the isolated LAN Segment.
+The screenshot below shows the Ubuntu Server VM hardware configuration, including memory, processor allocation, and network adapter assignment to the isolated LAN Segment. For full Ubuntu Server installation and configuration details see [Ubuntu Server Setup](ubuntu-setup.md).
 
 ![Ubuntu Server Configuration](../images/vmware-ubuntu-network.png)
 
@@ -77,7 +81,7 @@ To prevent accidental data leakage between the host machine and the guest VMs, t
 
 Shared folders were disabled on all VMs to prevent files from being transferred between the host machine and the guest VMs. This ensures the isolated lab environment remains fully contained.
 
-![Shared Folders Diabled](../images/vmware-no-shared-folders.png)
+![Shared Folders Disabled](../images/vmware-no-shared-folders.png)
 
 ### Drag and Drop and Clipboard Disabled
 
@@ -87,7 +91,7 @@ Drag-and-drop and clipboard sharing were disabled on all VMs to prevent accident
 
 ## Baseline Snapshots
 
-After completing the initial configuration of each VM — including OS installation, network setup, user creation, and security hardening — a baseline snapshot was taken of all three machines. A second snapshot was taken after Wazuh agent installation, Sysmon installation, and intentional vulnerability configuration on Windows 11.
+After completing the initial configuration of each VM - including OS installation, network setup, user creation, and security hardening - a baseline snapshot was taken of all three machines. A second snapshot was taken after [Wazuh Agent](wazuh-agent-setup.md) installation, [Sysmon](sysmon-setup.md) installation, and intentional vulnerability configuration on Windows 11. For full details on the Wazuh stack installation, see [Wazuh Setup](wazuh-setup.md).
 
 These snapshots serve as clean restore points that can be used to roll back the lab environment to a known good state before running attack exercises.
 
@@ -96,9 +100,8 @@ These snapshots serve as clean restore points that can be used to roll back the 
 | Baseline | Taken immediately after OS installation and initial configuration |
 | Pre-Exercise | Taken after full lab setup, including Wazuh agent, Sysmon, and vulnerability configuration |
 
-## Configuration Notes
+## Setup Notes
 
 - Total RAM allocated across all three VMs is 12GB, leaving approximately 6GB of headroom on top of the host OS's normal usage of 14GB
 - Storage was allocated generously on Ubuntu Server (80GB) to accommodate Wazuh log and alert data accumulation over time
-- All VMs use static IP addresses, DHCP is disabled on the LAN Segment to ensure consistent addressing for Wazuh agent-to-manager communication
-
+- All VMs use static IP addresses; DHCP is disabled on the LAN Segment to ensure consistent addressing for Wazuh agent-to-manager communication. For full IP assignment details see [Static IP Configuration](../architecture/static-ip-config.md)
