@@ -1,4 +1,4 @@
-# Wazuh Installation
+# Wazuh Setup
 
 This document covers the installation and configuration of the Wazuh SIEM stack on the Ubuntu Server virtual machine. Wazuh serves as the central security monitoring platform for the SOC homelab, collecting and analyzing security logs from monitored endpoints and generating alerts for suspicious activity.
 
@@ -28,17 +28,13 @@ The full Wazuh stack consists of three components, all installed on the Ubuntu S
 
 ## Installation Overview
 
-Wazuh was installed on Ubuntu Server using the official Wazuh quickstart installation script, which automates the deployment of all three stack components in a single command.
-
-For full installation instructions, refer to the official Wazuh documentation:
-**[Wazuh Quickstart Installation Guide](https://documentation.wazuh.com/current/quickstart.html)**
+Wazuh was installed on Ubuntu Server using the official Wazuh quickstart installation script, which automates the deployment of all three stack components in a single command. The official Wazuh quickstart installation guide can be found at the [Wazuh Quickstart Installation Guide](https://documentation.wazuh.com/current/quickstart.html).
 
 The quickstart script handles all dependency installation, service configuration, and initial setup automatically. After the script completes, all three Wazuh services are running, and the dashboard is accessible via browser.
 
 ## Accessing the Dashboard
 
 The Wazuh dashboard is accessible from the Windows 11 VM browser at:
-
 ```
 https://192.168.100.10
 ```
@@ -58,7 +54,6 @@ The screenshot below shows the Wazuh dashboard home page after successful login,
 ## Verifying Services
 
 After installation, all three Wazuh services were verified as active and running using the following command on Ubuntu Server:
-
 ```bash
 sudo systemctl is-active wazuh-manager.service wazuh-indexer.service wazuh-dashboard.service
 ```
@@ -76,19 +71,28 @@ wazuh-dashboard: active
 
 After the Wazuh stack was confirmed operational, a Wazuh agent was deployed on the Windows 11 target endpoint to begin forwarding security logs to the Wazuh Manager. The screenshot below shows the Windows 11 agent appearing as active in the Wazuh dashboard, confirming successful agent-to-manager communication.
 
-Full agent installation details are documented in [Wazuh Agent Configuration](../configurations/wazuh-agent-config.md).
+Full agent installation details are documented in [Wazuh Agent Setup](wazuh-agent-setup.md).
 
 ![Wazuh Agent Dashboard](../images/wazuh-agent-dashboard.png)
 
 ## Starting Wazuh After Reboot
 
 Wazuh services can be started manually after booting Ubuntu Server with the following commands:
-
 ```bash
 sudo systemctl start wazuh-manager
 sudo systemctl start wazuh-indexer
 sudo systemctl start wazuh-dashboard
 ```
+
+## Troubleshooting Encountered
+
+### Wazuh Manager Timeout on Startup
+
+After the initial installation, the Wazuh Manager service occasionally failed to start with a `failed (result: timeout)` error, indicating the service was taking too long to initialize and being killed by systemd before fully starting.
+
+**Root cause:** The issue was caused by insufficient system resources during startup when multiple services were initializing simultaneously after a cold boot.
+
+**Resolution:** A full reboot of the Ubuntu Server VM resolved the issue. After the reboot, all three Wazuh services started successfully and have been stable since.
 
 ## Configuration Notes
 
