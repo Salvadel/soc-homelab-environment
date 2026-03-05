@@ -1,137 +1,81 @@
-# Wazuh Agent Configuration
+# Sysmon Setup
 
-This document covers the installation, configuration, and verification of the Wazuh agent on the Windows 11 target endpoint. The Wazuh agent is responsible for collecting security logs and telemetry from the endpoint and forwarding them in real time to the Wazuh Manager running on Ubuntu Server at 192.168.100.10.
+This document covers the installation and configuration of Sysmon (System Monitor) on the Windows 11 target endpoint. Sysmon is a free Microsoft Sysinternals tool that significantly enhances the quality and detail of endpoint logs collected by the Wazuh agent, providing visibility into process creation, network connections, and file system activity that standard Windows Event Logs do not capture.
 
-## Agent Overview
+## Why Sysmon
 
-| Property | Value |
+The default Windows Event Logs forwarded by the Wazuh agent provide limited visibility into endpoint activity. Without Sysmon, many attack techniques leave little or no trace in standard logs. Sysmon fills this gap by generating detailed telemetry at the system level, including:
+
+- Process creation with full command line arguments
+- Parent-child process relationships
+- Network connection attempts, including source and destination IPs
+- File creation and modification events
+- Driver and DLL loading events
+
+This additional telemetry is essential for detecting and investigating the attack simulations conducted in this lab and reflects how Sysmon is commonly deployed alongside SIEM agents in real enterprise environments.
+
+## Download
+
+Sysmon is part of the Microsoft Sysinternals suite and can be downloaded directly from the [Microsoft Sysinternals official download page](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon). The zip archive contains four files:
+
+| File | Description |
 |---|---|
-| Agent Installed On | Windows 11 Home (192.168.100.20) |
-| Wazuh Manager IP | 192.168.100.10 |
-| Agent Name | Windows_11 |
-| Communication Port | 1514 (UDP) |
+| Sysmon.exe | 32-bit version — not used |
+| Sysmon64.exe | 64-bit version — used for this lab |
+| Sysmon64a.exe | ARM 64-bit version — not used |
+| Eula.txt | License agreement |
 
-## Prerequisites
+Since Windows 11 is a 64-bit operating system, **Sysmon64.exe** is the correct binary.
 
-Before installing the agent, the Windows VM network adapter was temporarily switched from the **LAN Segment** to **NAT** in VMware settings to allow internet access for downloading the agent package from packages.wazuh.com. After installation the adapter was immediately switched back to the **LAN Segment** to restore network isolation.
-
-This is required because the isolated LAN Segment has no internet access by design, preventing direct download from the Wazuh package repository.
+The Sysmon folder was saved to `C:\Tools\Sysmon\` for permanent storage. This location is important as the executable is required for future updates, configuration changes, or reinstallation.
 
 ## Installation
 
-The Wazuh agent was deployed through the Wazuh Dashboard on Ubuntu Server. Navigate to:
-
-```
-Agents > Deploy New Agent > Windows
-```
-
-The dashboard generates a custom PowerShell command with the Wazuh Manager IP pre-configured. The command was run in PowerShell as Administrator on the Windows 11 VM:
-
+Sysmon was installed via PowerShell running as Administrator. Navigate to the Sysmon folder and run:
 ```powershell
-Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.14.3-1.msi -OutFile $env:tmp\wazuh-agent; msiexec.exe /i $env:tmp\wazuh-agent /q WAZUH_MANAGER='192.168.100.10' WAZUH_AGENT_NAME='Windows_11'
+cd C:\Tools\Sysmon
+.\Sysmon64.exe -accepteula -i
 ```
 
-## Starting the Agent Service
+The `-accepteula` flag silently accepts the license agreement, and `-i` initiates the installation.
 
-After installation, the Wazuh agent service was started via PowerShell as Administrator:
+### Installation Screenshot
 
+![Sysmon Installation Output](../images/sysmon-install.png)
+
+## Verify Sysmon is Running
+
+After installation, confirm Sysmon is running as a service:
 ```powershell
-NET START WazuhSvc
+Get-Service Sysmon64
 ```
 
-The agent service was also configured to start automatically on every system boot using:
+Expected output should show **Status: Running**.
 
-```powershell
-Set-Service -Name "WazuhSvc" -StartupType Automatic
+### Service Verification Screenshot
+
+![Sysmon Service Running](../images/sysmon-service-running.png)
+
+## Auto-Start on Boot
+
+Sysmon was configured to start automatically on system boot, so it does not need to be manually started each session. This was configured via the Windows Services manager (`services.msc`) by setting the Sysmon64 service Startup Type to **Automatic**.
+
+## Wazuh Integration
+
+No additional configuration is required on the Wazuh side to begin collecting Sysmon logs once the Sysmon log channel has been added to ossec.conf. Full details on the ossec.conf configuration is documented in [Wazuh Agent Setup](wazuh-agent-setup.md).
+
+Sysmon events appear in the Wazuh dashboard under the Windows agent's event log view and can be filtered using:
+```
+rule.groups: sysmon
 ```
 
-### Service Start Screenshot
+### Wazuh Dashboard Showing Sysmon Events
 
-![Sysmon Service Started](../images/sysmon-status.png)
-
-## Verifying Agent Connectivity
-
-After switching the network adapter back to the LAN Segment, agent connectivity to the Wazuh Manager was verified through the Wazuh Dashboard on the Ubuntu Server. The Windows 11 agent appears as **Active** in the agent list.
-
-## Verifying Sysmon Log Collection
-
-With the Sysmon localfile entry added to ossec.conf and the agent restarted, Sysmon events were confirmed flowing into the Wazuh dashboard. Two screenshots below demonstrate successful Sysmon log collection.
-
-### Sysmon Events in Dashboard View
-
-The screenshot below shows the Wazuh Threat Hunting events page filtered by `rule.groups: sysmon`, confirming that Sysmon generated events are being received and processed by the Wazuh Manager from the Windows 11 agent.
-
-![Sysmon Events](../images/sysmon-logs-overview.png)
-
-### Expanded Sysmon Event Detail
-
-The screenshot below shows an individual Sysmon event expanded to display its full detail. The `rule.groups: sysmon` and `data.win.system.channel: Microsoft-Windows-Sysmon/Operational` fields confirm the event originated from Sysmon on the Windows 11 endpoint and was correctly parsed and categorized by the Wazuh Manager.
-
-![Sysmon Events Detailed](../images/sysmon-logs.png)
-
-## Troubleshooting Encountered
-
-### Issue 1 — Agent installer could not reach the package repository
-
-During installation, the following error was returned when attempting to run the install command while the VM was on the LAN Segment:
-
-```
-Invoke-WebRequest : The remote name could not be resolved: 'packages.wazuh.com'
-```
-
-**Root cause:** The isolated LAN Segment has no internet access, preventing the VM from reaching the Wazuh package repository.
-
-**Resolution:** Temporarily switched the VMware network adapter from LAN Segment to NAT, ran the install command successfully, then immediately switched back to LAN Segment.
-
-After switching back to the LAN Segment, the agent did not immediately appear in the dashboard. The WazuhSvc service was confirmed running via:
-
-```powershell
-Get-Service WazuhSvc
-```
-
-The agent appeared in the dashboard within a few minutes of the service starting and the network adapter being restored to the LAN Segment.
-
-### Issue 2 — Sysmon logs not appearing in Wazuh dashboard
-
-After installation, Sysmon events were not appearing in the Wazuh dashboard despite the agent actively forwarding other Windows logs.
-
-**Root cause:** The Sysmon log channel was not present in the ossec.conf configuration file by default. Wazuh does not automatically collect Sysmon logs without an explicit local file entry pointing to the Sysmon event channel.
-
-**Resolution:** The following entry was manually appended to ossec.conf to instruct the Wazuh agent to collect from the Sysmon event channel:
-
-```xml
-<localfile>
-    <location>Microsoft-Windows-Sysmon/Operational</location>
-    <log_format>eventchannel</log_format>
-</localfile>
-```
-
-After saving the file, the WazuhSvc service was restarted to apply the change:
-
-```powershell
-Restart-Service WazuhSvc
-```
-
-Sysmon events began appearing in the Wazuh dashboard immediately after the restart.
-
-## Agent Log Location
-
-The Wazuh agent logs on Windows are located at:
-
-```
-C:\Program Files (x86)\ossec-agent\ossec.log
-```
-
-These logs can be checked for connection errors or communication issues with the Wazuh Manager:
-
-```powershell
-type "C:\Program Files (x86)\ossec-agent\ossec.log"
-```
+![Sysmon Events in Wazuh Dashboard](../images/wazuh-sysmon-events.png)
 
 ## Configuration Notes
 
-- The agent configuration file is located at `C:\Program Files (x86)\ossec-agent\ossec.conf`
-- The Manager IP is set to 192.168.100.10 in the configuration file
-- No custom agent configuration has been applied beyond default settings
-- The agent collects Windows Event Logs and Sysmon logs, which are forwarded to the Wazuh Manager in real time
-- A future improvement is to configure custom log collection rules within ossec.conf to expand the scope of events collected
+- Sysmon64.exe is stored permanently at `C:\Tools\Sysmon\` and should not be deleted
+- No custom Sysmon configuration file has been applied — Sysmon is running with default settings
+- A future improvement is to apply a community ruleset, such as the SwiftOnSecurity Sysmon config to further improve detection coverage and reduce noise
+- Sysmon version can be checked by running `.\Sysmon64.exe` with no arguments in the installation directory
