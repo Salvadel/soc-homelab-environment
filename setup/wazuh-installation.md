@@ -53,7 +53,7 @@ A self-signed SSL certificate is used by default, which causes the browser to di
 
 The screenshot below shows the Wazuh dashboard home page after successful login, confirming the full stack is operational.
 
-![Wazuh Dashboard](../images.wazuh-dasbboard-home.png)
+![Wazuh Dashboard](../images.wazuh-dashboard-home.png)
 
 ## Verifying Services
 
