@@ -54,4 +54,3 @@ ping 192.168.100.10
 - All static IPs were assigned manually through each VM's network settings
 - No default gateway is configured on any machine, as the LAN Segment has no routing to external networks
 - DNS is not configured, as all communication occurs directly via IP address within the isolated segment
-- IP assignments were confirmed stable across VM reboots before proceeding with [Wazuh installation](../setup/wazuh-setup.md)
