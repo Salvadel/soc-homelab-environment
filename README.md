@@ -4,9 +4,7 @@ A home Security Operations Center (SOC) lab built to simulate real-world threat 
 
 ## Network Diagram
 
-<p align="center">
-  <img src="images/network-diagram.png" alt="SOC Homelab Network Diagram" width="700" />
-</p>
+![Network Diagram](../images/network-diagram.png)
 
 ## Technologies Used
 
@@ -68,16 +66,3 @@ Documented attack simulation and detection exercises performed in the lab. Each 
 | Project | Description |
 |---|---|
 | Coming soon | — |
-
-## Lab Status
-
-| Component | Status |
-|---|---|
-| VMware Environment | ✅ Complete |
-| Windows 11 VM | ✅ Complete |
-| Kali Linux VM | ✅ Complete |
-| Ubuntu Server VM | ✅ Complete |
-| Wazuh SIEM | ✅ Complete |
-| Wazuh Agent | ✅ Complete |
-| Sysmon | ✅ Complete |
-| Projects | 🔄 In Progress |
