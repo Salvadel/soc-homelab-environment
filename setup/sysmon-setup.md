@@ -72,6 +72,6 @@ rule.groups: sysmon
 ## Configuration Notes
 
 - Sysmon64.exe is stored permanently at `C:\Tools\Sysmon\` and should not be deleted
-- No custom Sysmon configuration file has been applied — Sysmon is running with default settings
+- No custom Sysmon configuration file has been applied - Sysmon is running with default settings
 - A future improvement is to apply a community ruleset, such as the SwiftOnSecurity Sysmon config to further improve detection coverage and reduce noise
 - Sysmon version can be checked by running `.\Sysmon64.exe` with no arguments in the installation directory
