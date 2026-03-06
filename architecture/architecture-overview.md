@@ -47,7 +47,7 @@ Wazuh is free, open source, and widely deployed in real enterprise environments,
 The default Windows Event Logs captured by the Wazuh agent provide limited visibility into endpoint activity. Sysmon helps to improve the system log quality by capturing detailed process creation events, parent-child process relationships, network connection attempts, and file creation events. This additional telemetry is essential for detecting and investigating the kinds of attacks simulated in this lab and reflects a real environment, where Sysmon is commonly deployed alongside SIEM agents.
 
 **Why Windows was intentionally weakened:**
-Out of the box, Windows 11 blocks most attack techniques through Defender, the firewall, and strong default configurations. Since the purpose of the lab is to simulate attacks to create telemetry and practice detection, these controls were selectively disabled to allow a greater attack scope and generate meaningful high-value alerts. This is acceptable in isolated lab environments, as all changes are contained within a VM that has no connectivity outside the LAN Segment to the open Internet.
+Out of the box, Windows 11 blocks most attack techniques through Defender, the firewall, and strong default configurations. Since the purpose of the lab is to simulate attacks to create telemetry and practice detection, these controls were selectively disabled to allow a greater attack scope and generate meaningful high-value alerts. This is acceptable in isolated lab environments, as all changes are contained within a VM with no connectivity to the open Internet.
 
 ## Known Limitations
 
@@ -60,9 +60,9 @@ Out of the box, Windows 11 blocks most attack techniques through Defender, the f
 
 ## Future Improvements
 
-- **pfSense or OPNsense firewall VM** — Add network-level visibility, traffic monitoring, and segmentation between the attacker and target networks
-- **Windows Server with Active Directory** — Simulate a domain environment to practice AD-based attacks and detections such as pass-the-hash, Kerberoasting, and privilege escalation
-- **Additional Windows endpoints** — Add more target machines to simulate lateral movement across multiple workstations
-- **Wazuh agent on Kali** — Deploy an agent on the attack machine to correlate attacker-side activity with defender-side alerts
-- **Custom Sysmon configuration** — Implement a community Sysmon config such as the SwiftOnSecurity ruleset to further improve detection coverage
-- **Vulnerability scanner** — Integrate a tool like OpenVAS or Nessus to add vulnerability assessment exercises to the lab
+- **pfSense or OPNsense firewall VM** - Add network-level visibility, traffic monitoring, and segmentation between the attacker and target networks
+- **Windows Server with Active Directory** - Simulate a domain environment to practice AD-based attacks and detections such as pass-the-hash, Kerberoasting, and privilege escalation
+- **Additional Windows endpoints** - Add more target machines to simulate lateral movement across multiple workstations
+- **Wazuh agent on Kali** - Deploy an agent on the attack machine to correlate attacker-side activity with defender-side alerts
+- **Custom Sysmon configuration** - Implement a community Sysmon config such as the SwiftOnSecurity ruleset to improve detection coverage further
+- **Vulnerability scanner** - Integrate a tool like OpenVAS or Nessus to add vulnerability assessment exercises to the lab
