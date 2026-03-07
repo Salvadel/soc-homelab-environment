@@ -18,16 +18,16 @@ This document outlines the static IP configuration applied to each virtual machi
 | Machine | OS | IP Address | Subnet Mask | Gateway | Role |
 |---|---|---|---|---|---|
 | pfSense | pfSense CE | 192.168.100.1 | 255.255.255.0 | N/A | Firewall / Router |
-| Ubuntu Server | Ubuntu Server 24 | 192.168.100.10 | 255.255.255.0 | 192.168.100.1 | SIEM Server (Wazuh) |
+| Ubuntu Server - SIEM | Ubuntu Server 24 | 192.168.100.10 | 255.255.255.0 | 192.168.100.1 | SIEM Server (Wazuh) |
 | Windows 11 | Windows 11 Home | 192.168.100.20 | 255.255.255.0 | 192.168.100.1 | Target Endpoint |
 | Kali Linux | Kali Linux 2025.4 | 192.168.100.30 | 255.255.255.0 | 192.168.100.1 | Attack Machine |
-| SOC Tools VM | Ubuntu Server 24 | 192.168.100.40 | 255.255.255.0 | 192.168.100.1 | SOAR Server |
+| Ubuntu Server - SOAR | Ubuntu Server 24 | 192.168.100.40 | 255.255.255.0 | 192.168.100.1 | SOAR Server |
 
 ## Connectivity Verification
 
 Connectivity between all machines was verified using ping after static IP assignment. All machines were confirmed able to reach the pfSense gateway and each other across the LAN Segment.
 
-### Windows 11 → Ubuntu Server
+### Windows 11 → Ubuntu Server — SIEM
 ```
 ping 192.168.100.10
 ```
@@ -45,7 +45,7 @@ ping 192.168.100.20
 ```
 ![Ping Test Kali to Windows](../images/ping-test-kali-to-windows.png)
 
-### Kali Linux → Ubuntu Server
+### Kali Linux → Ubuntu Server — SIEM
 ```
 ping 192.168.100.10
 ```
@@ -57,11 +57,11 @@ ping 192.168.100.1
 ```
 ![Ping Test to Gateway](../images/ping-test-gateway.png)
 
-### SOC Tools VM → Ubuntu Server
+### Ubuntu Server — SOAR → Ubuntu Server — SIEM
 ```
 ping 192.168.100.10
 ```
-![Ping Test SOC Tools to Server](../images/ping-test-soctools-to-server.png)
+![Ping Test SOAR to SIEM](../images/ping-test-soar-to-siem.png)
 
 ## Configuration Notes
 
