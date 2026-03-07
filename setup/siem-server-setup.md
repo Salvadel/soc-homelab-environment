@@ -51,8 +51,6 @@ After installation the system package list and all installed packages were updat
 sudo apt update && sudo apt upgrade -y
 ```
 
-![Ubuntu System Update](../images/ubuntu-system-update.png)
-
 ## Wazuh Services
 
 The full Wazuh stack is installed and running on Ubuntu Server - SIEM. All three Wazuh services are configured to start automatically on boot. Full installation details are documented in [Wazuh Setup](wazuh-setup.md).
