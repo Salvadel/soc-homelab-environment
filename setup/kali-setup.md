@@ -49,10 +49,6 @@ After installation the system package list and all installed packages were updat
 sudo apt update && sudo apt upgrade -y
 ```
 
-The screenshot below shows the terminal output confirming all packages are up to date.
-
-![Kali System Update](../images/kali-system-update.png)
-
 ## Connectivity Verification
 
 After static IP assignment, connectivity to all other VMs on the LAN Segment and to the pfSense gateway was verified using ping to confirm the network is functioning correctly.
