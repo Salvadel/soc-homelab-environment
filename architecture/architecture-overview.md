@@ -2,17 +2,17 @@
 
 ## Project Purpose
 
-This project is a home Security Operations Center (SOC) lab built to simulate a real-world threat detection and incident response environment. The lab replicates a basic corporate network consisting of a monitored Windows endpoint, a SIEM server, a SOAR automation server, a firewall, and an attack machine. The purpose is to develop hands-on experience in attack simulation, log analysis, alert triage, automated response workflows, and incident documentation — core skills required for SOC Analyst roles. All attack activity is fully contained within an isolated virtual network, with controlled internet access managed through a pfSense firewall for SOC tooling.
+This project is a home Security Operations Center (SOC) lab built to simulate a real-world threat detection and incident response environment. The lab replicates a basic corporate network consisting of a monitored Windows endpoint, a SIEM server, a SOAR automation server, a firewall, and an attack machine. The purpose is to develop hands-on experience in attack simulation, log analysis, alert triage, automated response workflows, and incident documentation - core skills required for SOC Analyst roles. All attack activity is fully contained within an isolated virtual network, with controlled internet access managed through a pfSense firewall for SOC tooling.
 
 ## Environment Summary
 
 The lab consists of five virtual machines running on VMware Workstation. Each machine serves a distinct role in the SOC workflow:
 
-- **pfSense (192.168.100.1)** — Firewall and router sitting at the network perimeter, managing all traffic between the internal LAN Segment and the internet via VMware NAT
-- **Ubuntu Server (192.168.100.10)** — SIEM server running Wazuh, responsible for collecting and analyzing security logs from monitored endpoints
-- **Windows 11 Home (192.168.100.20)** — Target endpoint simulating a corporate workstation, monitored by a Wazuh agent
-- **Kali Linux (192.168.100.30)** — Attack machine used to simulate threat actor behavior against the Windows endpoint
-- **SOC Tools VM (192.168.100.40)** — SOAR server running Shuffle, TheHive, and Gotify, responsible for automated alert triage, case management, and analyst notifications
+- **pfSense (192.168.100.1)** - Firewall and router sitting at the network perimeter, managing all traffic between the internal LAN Segment and the internet via VMware NAT
+- **Ubuntu Server (192.168.100.10)** - SIEM server running Wazuh, responsible for collecting and analyzing security logs from monitored endpoints
+- **Windows 11 Home (192.168.100.20)** - Target endpoint simulating a corporate workstation, monitored by a Wazuh agent
+- **Kali Linux (192.168.100.30)** - Attack machine used to simulate threat actor behavior against the Windows endpoint
+- **SOC Tools VM (192.168.100.40)** - SOAR server running Shuffle, TheHive, and Gotify, responsible for automated alert triage, case management, and analyst notifications
 
 ## Network Design
 
