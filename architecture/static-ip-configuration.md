@@ -27,7 +27,7 @@ This document outlines the static IP configuration applied to each virtual machi
 
 Connectivity between all machines was verified using ping after static IP assignment. All machines were confirmed able to reach the pfSense gateway and each other across the LAN Segment.
 
-### Windows 11 → Ubuntu Server — SIEM
+### Windows 11 → Ubuntu Server - SIEM
 ```
 ping 192.168.100.10
 ```
