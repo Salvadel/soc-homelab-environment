@@ -6,9 +6,7 @@ A home Security Operations Center (SOC) lab built to simulate real-world threat 
 
 ## Network Diagram
 
-<p align="center">
-  <img src="architecture/images/network-diagram.png" alt="SOC Homelab Network Diagram" width="700" />
-</p>
+![SOC Network Diagram](images/network-diagram.png)
 
 ---
 
