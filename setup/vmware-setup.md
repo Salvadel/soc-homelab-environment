@@ -122,14 +122,14 @@ Drag and drop and clipboard sharing were disabled on all VMs to prevent accident
 
 ## Baseline Snapshots
 
-After completing the initial configuration of each VM - including OS installation, network setup, user creation, and security hardening - a baseline snapshot was taken of all five machines. A second snapshot was taken after [Wazuh Agent](wazuh-agent-setup.md) installation, [Sysmon](sysmon-setup.md) installation, and intentional vulnerability configuration on Windows 11. For full details on the Wazuh stack installation see [Wazuh Setup](wazuh-setup.md).
+After completing the initial configuration of each VM - including OS installation, network setup, user creation, and security hardening - a baseline snapshot was taken of all five machines. A second snapshot was taken after [Wazuh Agent](wazuh-agent-setup.md) installation, [Sysmon](sysmon-setup.md) installation, and intentional vulnerability configuration on Windows 11, and after the full SOAR stack including [Shuffle Setup](shuffle-setup.md) and [TheHive Setup](thehive-setup.md) was confirmed operational on Ubuntu Server - SOAR. For full details on the Wazuh stack installation see [Wazuh Setup](wazuh-setup.md).
 
 These snapshots serve as clean restore points that can be used to roll back the lab environment to a known good state before running attack exercises.
 
 | Snapshot | Description |
 |---|---|
 | Baseline | Taken immediately after OS installation and initial configuration |
-| Pre-Exercise | Taken after full lab setup including Wazuh agent, Sysmon, and vulnerability configuration |
+| Pre-Exercise | Taken after full lab setup including Wazuh agent, Sysmon, vulnerability configuration on Windows 11, and full SOAR stack installation on Ubuntu Server - SOAR |
 
 ## Setup Notes
 
