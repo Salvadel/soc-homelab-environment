@@ -10,13 +10,14 @@ This document covers the installation and configuration of the Windows 11 Home v
 | RAM | 4GB |
 | CPUs | 2 |
 | Storage | 64GB |
-| Network Adapter | LAN Segment (Isolated) |
+| Network Adapter | LAN Segment |
 | IP Address | 192.168.100.20 |
+| Gateway | 192.168.100.1 (pfSense) |
 | Role | Target Endpoint |
 
 ## Installation
 
-Windows 11 Home was installed as a virtual machine in VMware Workstation using the official Windows 11 ISO. During installation, a local account was created without linking to a Microsoft account to keep the environment self-contained and independent of any external services. The official Windows 11 ISO can be downloaded from [Microsoft's official download page](https://www.microsoft.com/software-download/windows11).
+Windows 11 Home was installed as a virtual machine in VMware Workstation using the official Windows 11 ISO. During installation a local account was created without linking to a Microsoft account to keep the environment self-contained and independent of any external services. The official Windows 11 ISO can be downloaded from [Microsoft's official download page](https://www.microsoft.com/software-download/windows11).
 
 ### Windows 11 Desktop
 
@@ -26,7 +27,7 @@ The screenshot below confirms the Windows 11 VM is fully installed and operation
 
 ## Network Configuration
 
-A static IP address was manually assigned to the Windows 11 VM to ensure consistent addressing within the isolated LAN Segment. No default gateway or DNS was configured, as the LAN Segment has no routing to external networks.
+A static IP address was manually assigned to the Windows 11 VM to ensure consistent addressing within the LAN Segment. The default gateway is set to 192.168.100.1 pointing to pfSense. All internet bound traffic from this machine routes through pfSense via VMware NAT. Internal traffic to other VMs stays on the LAN Segment and bypasses pfSense entirely.
 
 ### Static IP Assignment
 
@@ -34,12 +35,12 @@ A static IP address was manually assigned to the Windows 11 VM to ensure consist
 |---|---|
 | IP Address | 192.168.100.20 |
 | Subnet Mask | 255.255.255.0 |
-| Gateway | None |
-| DNS | None |
+| Gateway | 192.168.100.1 |
+| DNS | 192.168.100.1 (pfSense) |
 
-The screenshot below shows the output of `ipconfig` in PowerShell, confirming the static IP address has been correctly assigned.
+The screenshot below shows the output of `ipconfig` in PowerShell confirming the static IP address has been correctly assigned.
 
-![Windows 11 IP Configurations](../images/windows-ip-config.png)
+![Windows 11 IP Configuration](../images/windows-ip-config.png)
 
 ## User Accounts
 
@@ -52,21 +53,21 @@ Two local user accounts were created on the Windows 11 VM to simulate a realisti
 
 Both accounts were created as local accounts with no Microsoft account linking. The j.doe account is intentionally assigned a weak password to support brute force simulation exercises.
 
-The screenshot below shows both accounts listed via PowerShell, confirming successful creation.
+The screenshot below shows both accounts listed via PowerShell confirming successful creation.
 
 ![Windows 11 Users](../images/windows-users.png)
 
 ## Security Monitoring Stack
 
-The Windows 11 VM has two security monitoring components installed that work together to collect and forward endpoint telemetry to the Wazuh Manager on Ubuntu Server.
+The Windows 11 VM has two security monitoring components installed that work together to collect and forward endpoint telemetry to the Wazuh Manager on Ubuntu Server - SIEM.
 
 ### Wazuh Agent
 
-The Wazuh agent is installed and configured to forward Windows Event Logs and Sysmon logs to the Wazuh Manager at 192.168.100.10. Full installation details are documented in the [Wazuh Agent Setup](../setup/wazuh-agent-setup.md) file.
+The Wazuh agent is installed and configured to forward Windows Event Logs and Sysmon logs to the Wazuh Manager at 192.168.100.10. Full installation details are documented in [Wazuh Agent Setup](wazuh-agent-setup.md).
 
 ### Sysmon
 
-Sysmon is installed to significantly enhance the quality and detail of endpoint logs collected by the Wazuh agent. Full installation details are documented in the [Sysmon Setup](../setup/sysmon-setup.md) file.
+Sysmon is installed to significantly enhance the quality and detail of endpoint logs collected by the Wazuh agent. Full installation details are documented in [Sysmon Setup](sysmon-setup.md).
 
 The screenshot below shows both services running and confirmed active on the Windows 11 VM.
 
@@ -74,16 +75,23 @@ The screenshot below shows both services running and confirmed active on the Win
 
 ## Connectivity Verification
 
-After static IP assignment, connectivity to both other VMs on the LAN Segment was verified using ping.
+After static IP assignment connectivity to all other VMs on the LAN Segment and to the pfSense gateway was verified using ping.
 
-### Windows 11 → Ubuntu Server
+### Windows 11 - pfSense Gateway
+```powershell
+ping 192.168.100.1
+```
+
+![Windows Ping Test to Gateway](../images/ping-test-gateway.png)
+
+### Windows 11 - Ubuntu Server - SIEM
 ```powershell
 ping 192.168.100.10
 ```
 
 ![Windows Ping Test to Ubuntu Server](../images/ping-test-windows-to-server.png)
 
-### Windows 11 → Kali Linux
+### Windows 11 - Kali Linux
 ```powershell
 ping 192.168.100.30
 ```
@@ -92,7 +100,7 @@ ping 192.168.100.30
 
 ## Intentional Vulnerability Configuration
 
-To allow realistic attack simulations from the Kali Linux machine, several default Windows 11 security controls were intentionally disabled. These changes are strictly contained within the isolated lab environment and do not affect any external systems or networks. Each configuration change is documented below, along with the rationale for why it was applied.
+To allow realistic attack simulations from the Kali Linux machine several default Windows 11 security controls were intentionally disabled. These changes are strictly contained within the lab environment and do not affect any external systems or networks. Each configuration change is documented below along with the rationale for why it was applied.
 
 ### Windows Defender Real Time Protection Disabled
 ```powershell
@@ -125,6 +133,6 @@ Set-SmbServerConfiguration -RequireSecuritySignature $false -Force
 
 ## Configuration Notes
 
-- Windows 11 is running unactivated, which restricts access to some built-in management tools such as lusrmgr.msc. All configuration was performed via PowerShell as Administrator to work around this limitation
+- Windows 11 is running unactivated which restricts access to some built-in management tools such as lusrmgr.msc. All configuration was performed via PowerShell as Administrator to work around this limitation
 - All intentional vulnerability configurations are isolated to this VM on the LAN Segment and pose no risk to the host machine or external networks
-- A pre-exercise snapshot was taken after all vulnerability configurations were applied, providing a clean restore point before running attack exercises
+- A pre-exercise snapshot was taken after all vulnerability configurations were applied providing a clean restore point before running attack exercises
