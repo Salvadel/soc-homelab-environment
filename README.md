@@ -2,13 +2,9 @@
 
 A home Security Operations Center (SOC) lab built to simulate real-world threat detection and incident response workflows. The lab replicates a basic corporate network environment consisting of a monitored Windows endpoint, a SIEM server, a SOAR automation server, a firewall, and an attack machine - all connected through a pfSense managed internal network. The purpose is to develop hands-on experience in attack simulation, log analysis, alert triage, automated response workflows, and incident documentation - core skills required for SOC Analyst roles.
 
----
-
 ## Network Diagram
 
 ![SOC Network Diagram](images/network-diagram.png)
-
----
 
 ## Technologies Used
 
@@ -25,8 +21,6 @@ A home Security Operations Center (SOC) lab built to simulate real-world threat 
 | Shuffle | Open source SOAR platform for automated alert response workflows |
 | TheHive | Open source case management platform for incident investigation |
 | Slack | Analyst notification platform integrated with Shuffle |
-
----
 
 ## Repository Structure
 ```
@@ -61,8 +55,6 @@ soc-homelab/
 └── images/
 ```
 
----
-
 ## Table of Contents
 
 ### Architecture
@@ -72,8 +64,6 @@ Start here for a full understanding of the lab design, network topology, data fl
 |---|---|
 | [Architecture Overview](architecture/architecture-overview.md) | Full lab design, machine roles, data flow diagram, design decisions, known limitations, and future improvements |
 | [Static IP Configuration](architecture/static-ip-configuration.md) | IP assignment table and connectivity verification between all five VMs |
-
----
 
 ### Setup
 Follow these documents in order to rebuild the lab from scratch. Each document covers the installation and configuration of a single component.
@@ -92,30 +82,9 @@ Follow these documents in order to rebuild the lab from scratch. Each document c
 | 10 | [Shuffle Setup](setup/shuffle-setup.md) | Shuffle installation, Wazuh webhook configuration, and automation workflow setup |
 | 11 | [TheHive Setup](setup/thehive-setup.md) | TheHive installation, Shuffle integration, and case management configuration |
 
----
-
 ### Projects
 Documented attack simulation and detection exercises performed in the lab. Each project includes the attack methodology, Wazuh alerts generated, investigation findings, and incident response documentation.
 
 | Project | Description |
 |---|---|
 | Coming soon | - |
-
----
-
-## Lab Status
-
-| Component | Status |
-|---|---|
-| VMware Environment | ✅ Complete |
-| pfSense Firewall | 🔄 In Progress |
-| Windows 11 VM | ✅ Complete |
-| Kali Linux VM | ✅ Complete |
-| Ubuntu Server - SIEM | ✅ Complete |
-| Wazuh SIEM | ✅ Complete |
-| Wazuh Agent | ✅ Complete |
-| Sysmon | ✅ Complete |
-| Ubuntu Server - SOAR | 🔄 In Progress |
-| Shuffle | 🔄 In Progress |
-| TheHive | 🔄 In Progress |
-| Projects | 🔄 In Progress |
