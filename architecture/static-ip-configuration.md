@@ -1,29 +1,31 @@
 # Static IP Configuration
 
-This document outlines the static IP configuration applied to each virtual machine in the SOC homelab. Static IPs are used in place of DHCP to ensure consistent addressing across all machines, which is critical for Wazuh agent-to-manager communication and reliable attack simulation targeting. For a visual overview of how these machines connect, see [Architecture Overview](architecture-overview.md).
+This document outlines the static IP configuration applied to each virtual machine in the SOC homelab. Static IPs are used in place of DHCP to ensure consistent addressing across all machines, which is critical for Wazuh agent-to-manager communication, reliable attack simulation targeting, and pfSense gateway routing. For a visual overview of how these machines connect, see [Architecture Overview](architecture-overview.md).
 
 ## Network Information
 
 | Property | Value |
 |---|---|
-| Network Type | VMware LAN Segment (Isolated) |
+| Network Type | VMware LAN Segment |
 | Subnet | 192.168.100.0/24 |
 | Subnet Mask | 255.255.255.0 |
-| Gateway | N/A (Isolated — no gateway) |
+| Gateway | 192.168.100.1 (pfSense) |
 | DHCP | Disabled |
-| Internet Access | None |
+| Internet Access | Via pfSense NAT |
 
 ## IP Assignment Table
 
-| Machine | OS | IP Address | Subnet Mask | Role |
-|---|---|---|---|---|
-| Ubuntu Server | Ubuntu Server 24 | 192.168.100.10 | 255.255.255.0 | SIEM Server (Wazuh) |
-| Windows 11 | Windows 11 Home | 192.168.100.20 | 255.255.255.0 | Target Endpoint |
-| Kali Linux | Kali Linux 2025.4 | 192.168.100.30 | 255.255.255.0 | Attack Machine |
+| Machine | OS | IP Address | Subnet Mask | Gateway | Role |
+|---|---|---|---|---|---|
+| pfSense | pfSense CE | 192.168.100.1 | 255.255.255.0 | N/A | Firewall / Router |
+| Ubuntu Server | Ubuntu Server 24 | 192.168.100.10 | 255.255.255.0 | 192.168.100.1 | SIEM Server (Wazuh) |
+| Windows 11 | Windows 11 Home | 192.168.100.20 | 255.255.255.0 | 192.168.100.1 | Target Endpoint |
+| Kali Linux | Kali Linux 2025.4 | 192.168.100.30 | 255.255.255.0 | 192.168.100.1 | Attack Machine |
+| SOC Tools VM | Ubuntu Server 24 | 192.168.100.40 | 255.255.255.0 | 192.168.100.1 | SOAR Server |
 
 ## Connectivity Verification
 
-Connectivity between all machines was verified using ping after static IP assignment.
+Connectivity between all machines was verified using ping after static IP assignment. All machines were confirmed able to reach the pfSense gateway and each other across the LAN Segment.
 
 ### Windows 11 → Ubuntu Server
 ```
@@ -49,8 +51,23 @@ ping 192.168.100.10
 ```
 ![Ping Test Kali to Server](../images/ping-test-kali-to-server.png)
 
+### All Machines → pfSense Gateway
+```
+ping 192.168.100.1
+```
+![Ping Test to Gateway](../images/ping-test-gateway.png)
+
+### SOC Tools VM → Ubuntu Server
+```
+ping 192.168.100.10
+```
+![Ping Test SOC Tools to Server](../images/ping-test-soctools-to-server.png)
+
 ## Configuration Notes
 
 - All static IPs were assigned manually through each VM's network settings
-- No default gateway is configured on any machine, as the LAN Segment has no routing to external networks
-- DNS is not configured, as all communication occurs directly via IP address within the isolated segment
+- All VMs are configured with a default gateway of 192.168.100.1 pointing to pfSense
+- Internet bound traffic from any VM routes through pfSense before reaching the internet via VMware NAT
+- Internal VM to VM traffic stays on the LAN Segment and does not pass through pfSense
+- DNS is handled by pfSense which forwards DNS queries upstream through the NAT adapter
+- IP assignments were confirmed stable across VM reboots before proceeding with tool installations
