@@ -57,7 +57,7 @@ ping 192.168.100.1
 ```
 ![Ping Test to Gateway](../images/ping-test-gateway.png)
 
-### Ubuntu Server — SOAR → Ubuntu Server — SIEM
+### Ubuntu Server - SOAR → Ubuntu Server - SIEM
 ```
 ping 192.168.100.10
 ```
