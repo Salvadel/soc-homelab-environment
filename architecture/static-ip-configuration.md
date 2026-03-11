@@ -25,19 +25,13 @@ This document outlines the static IP configuration applied to each virtual machi
 
 ## Connectivity Verification
 
-Connectivity between all machines was verified using ping after static IP assignment. All machines were confirmed able to reach the pfSense gateway and each other across the LAN Segment.
+The ping tests below verify that all critical communication paths required for the lab to function are operational. Each test targets a specific workflow dependency:
 
-### Windows 11 → Ubuntu Server - SIEM
-```
-ping 192.168.100.10
-```
-![Ping Test Windows to Server](../images/ping-test-windows-to-server.png)
-
-### Windows 11 → Kali Linux
-```
-ping 192.168.100.30
-```
-![Ping Test Windows to Kali](../images/ping-test-windows-to-kali.png)
+- **Kali Linux to Windows 11** - confirms attack traffic can reach the target endpoint
+- **Windows 11 to Ubuntu Server - SIEM** - confirms the Wazuh agent can reach the Wazuh Manager
+- **Windows 11 to pfSense Gateway** - confirms that workstation can access internet
+- **Ubuntu Server - SIEM to Ubuntu Server - SOAR** - confirms the SIEM can forward alerts to the SOAR server
+- **Ubuntu Server - SOAR to pfsense Gateway** - confirms the SOAR server can access the internet to send alerts via email
 
 ### Kali Linux → Windows 11
 ```
@@ -45,24 +39,29 @@ ping 192.168.100.20
 ```
 ![Ping Test Kali to Windows](../images/ping-test-kali-to-windows.png)
 
-### Kali Linux → Ubuntu Server - SIEM
+### Windows 11 → Ubuntu Server - SIEM
 ```
 ping 192.168.100.10
 ```
-![Ping Test Kali to Server](../images/ping-test-kali-to-server.png)
+![Ping Test Windows to Server](../images/ping-test-windows-to-server.png)
 
-### All Machines → pfSense Gateway
+### Windows 11 → pfSense Gateway
 ```
 ping 192.168.100.1
 ```
-![Ping Test to Gateway](../images/ping-test-gateway.png)
+![Ping Test Windows to Gateway](../images/ping-test-windows-to-gateway.png)
 
-### Ubuntu Server - SOAR → Ubuntu Server - SIEM
+### Ubuntu Server - SIEM → Ubuntu Server - SOAR
+```bash
+ping 192.168.100.40
 ```
-ping 192.168.100.10
-```
-![Ping Test SOAR to SIEM](../images/ping-test-soar-to-siem.png)
+![Ping Test SIEM to SOAR](../images/ping-test-siem-to-soar.png)
 
+### Ubuntu Server - SOAR → pfSense Gateway
+```bash
+ping 192.168.100.1
+```
+![Ping Test SOAR to Gateway](../images/ping-test-soar-to-gateway.png)
 ## Configuration Notes
 
 - All static IPs were assigned manually through each VM's network settings
