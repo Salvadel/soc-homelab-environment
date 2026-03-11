@@ -1,6 +1,6 @@
 # SOC Homelab
 
-A home Security Operations Center (SOC) lab built to simulate real-world threat detection and incident response workflows. The lab replicates a basic corporate network environment consisting of a monitored Windows endpoint, a SIEM server, a SOAR automation server, a firewall, and an attack machine - all connected through a pfSense managed internal network. The purpose is to develop hands-on experience in attack simulation, log analysis, alert triage, automated response workflows, and incident documentation - core skills required for SOC Analyst roles.
+A home Security Operations Center (SOC) lab designed for simulating real-world threat detection and response scenarios. The lab is designed to mimic a basic corporate network infrastructure with a monitored Windows endpoint, SIEM server, SOAR server, firewall, and attack machine, all connected through a pfSense-managed internal network. The goal is to gain practical knowledge and experience in attack simulation, log analysis, and response, which are critical for becoming a SOC Analyst.
 
 ## Network Diagram
 
@@ -58,7 +58,7 @@ soc-homelab/
 ## Table of Contents
 
 ### Architecture
-Start here for a full understanding of the lab design, network topology, data flow, and the rationale behind every decision made.
+Start here for a full understanding of the lab design, network topology, data flow, and the rationale behind design decisions. 
 
 | Document | Description |
 |---|---|
@@ -66,7 +66,7 @@ Start here for a full understanding of the lab design, network topology, data fl
 | [Static IP Configuration](architecture/static-ip-configuration.md) | IP assignment table and connectivity verification between all five VMs |
 
 ### Setup
-Follow these documents in order to rebuild the lab from scratch. Each document covers the installation and configuration of a single component.
+Follow these documents in order to build the lab enviornment. Each document covers the installation and configuration of a single component.
 
 | Order | Document | Description |
 |---|---|---|
@@ -83,7 +83,7 @@ Follow these documents in order to rebuild the lab from scratch. Each document c
 | 11 | [TheHive Setup](setup/thehive-setup.md) | TheHive installation, Shuffle integration, and case management configuration |
 
 ### Projects
-Documented attack simulation and detection exercises performed in the lab. Each project includes the attack methodology, Wazuh alerts generated, investigation findings, and incident response documentation.
+Documented projects performed by the SOC-lab, full documentation, photos, and methodologies are listed in the respective project folder.
 
 | Project | Description |
 |---|---|
