@@ -139,7 +139,7 @@ These snapshots serve as clean restore points that can be used to roll back the 
 | Baseline | Taken immediately after OS installation and initial configuration |
 | Pre-Exercise | Taken after full lab setup |
 
-## Setup Notes
+## Configuration Notes
 
 - Storage was allocated generously on both Ubuntu Server VMs at 80GB each - Ubuntu Server - SIEM to accommodate Wazuh log data and Ubuntu Server - SOAR to accommodate TheHive case data
 - All VMs use static IP addresses with pfSense at 192.168.100.1 as the default gateway. For full IP assignment details, see [Static IP Configuration](../architecture/static-ip-configuration.md)
