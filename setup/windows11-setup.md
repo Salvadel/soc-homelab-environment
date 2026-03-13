@@ -17,7 +17,7 @@ This document covers the installation and configuration of the Windows 11 Home v
 
 ## Installation
 
-Windows 11 Home was installed as a virtual machine in VMware Workstation using the official Windows 11 ISO. During installation a local account was created without linking to a Microsoft account to keep the environment self-contained and independent of any external services. The official Windows 11 ISO can be downloaded from [Microsoft's official download page](https://www.microsoft.com/software-download/windows11).
+Windows 11 Home was installed as a virtual machine in VMware Workstation using the official Windows 11 ISO. During installation, a local account was created without linking to a Microsoft account to keep the environment self-contained and independent of any external services. The official Windows 11 ISO can be downloaded from [Microsoft's official download page](https://www.microsoft.com/software-download/windows11).
 
 ### Windows 11 Desktop
 
@@ -27,7 +27,7 @@ The screenshot below confirms the Windows 11 VM is fully installed and operation
 
 ## Network Configuration
 
-A static IP address was manually assigned to the Windows 11 VM to ensure consistent addressing within the LAN Segment. The default gateway is set to 192.168.100.1 pointing to pfSense. All internet bound traffic from this machine routes through pfSense via VMware NAT. Internal traffic to other VMs stays on the LAN Segment and bypasses pfSense entirely.
+A static IP address was manually assigned to the Windows 11 VM to ensure consistent addressing within the LAN Segment. The default gateway is set to 192.168.100.1, pointing to [pfSense](pfsense-setup.md). All internet-bound traffic from this machine routes through pfSense via VMware NAT. Internal traffic to other VMs stays on the LAN Segment and bypasses pfSense entirely.
 
 ### Static IP Assignment
 
@@ -38,9 +38,14 @@ A static IP address was manually assigned to the Windows 11 VM to ensure consist
 | Gateway | 192.168.100.1 |
 | DNS | 192.168.100.1 (pfSense) |
 
-The screenshot below shows the output of `ipconfig` in PowerShell confirming the static IP address has been correctly assigned.
+The static IP address was assigned by navigating to:
+```
+Settings > Network & Internet > Ethernet > Edit (next to IP Assignment) > Manual > IPv4
+```
 
-![Windows 11 IP Configuration](../images/windows-ip-config.png)
+The screenshot below shows the Windows network settings confirming the static IP, gateway, and DNS have been correctly assigned to the Windows 11 VM.
+
+![Windows 11 Network Config](../images/windows-network-config.png)
 
 ## User Accounts
 
@@ -53,7 +58,7 @@ Two local user accounts were created on the Windows 11 VM to simulate a realisti
 
 Both accounts were created as local accounts with no Microsoft account linking. The j.doe account is intentionally assigned a weak password to support brute force simulation exercises.
 
-The screenshot below shows both accounts listed via PowerShell confirming successful creation.
+The screenshot below shows both accounts listed via PowerShell, confirming successful creation.
 
 ![Windows 11 Users](../images/windows-users.png)
 
@@ -75,32 +80,27 @@ The screenshot below shows both services running and confirmed active on the Win
 
 ## Connectivity Verification
 
-After static IP assignment connectivity to all other VMs on the LAN Segment and to the pfSense gateway was verified using ping.
+After static IP assignment, connectivity was verified across the two most critical communication paths for the Windows 11 endpoint. For full network connectivity verification across all critical lab communication paths see [Static IP Configuration](../architecture/static-ip-configuration.md).
 
-### Windows 11 - pfSense Gateway
-```powershell
-ping 192.168.100.1
-```
-
-![Windows Ping Test to Gateway](../images/ping-test-gateway.png)
-
-### Windows 11 - Ubuntu Server - SIEM
+### Windows 11 → Ubuntu Server - SIEM
+Confirms the Wazuh agent can reach the Wazuh Manager. If this fails, no logs are forwarded and no alerts fire.
 ```powershell
 ping 192.168.100.10
 ```
 
 ![Windows Ping Test to Ubuntu Server](../images/ping-test-windows-to-server.png)
 
-### Windows 11 - Kali Linux
+### Windows 11 → pfSense Gateway
+Confirms the target endpoint can reach the gateway. If this fails, the workstation has no internet access.
 ```powershell
-ping 192.168.100.30
+ping 192.168.100.1
 ```
 
-![Windows Ping Test to Kali](../images/ping-test-windows-to-kali.png)
+![Windows Ping Test to Gateway](../images/ping-test-windows-to-gateway.png)
 
 ## Intentional Vulnerability Configuration
 
-To allow realistic attack simulations from the Kali Linux machine several default Windows 11 security controls were intentionally disabled. These changes are strictly contained within the lab environment and do not affect any external systems or networks. Each configuration change is documented below along with the rationale for why it was applied.
+To allow realistic attack simulations from the [Kali Linux](kali-setup.md) machine, several default Windows 11 security controls were intentionally disabled. These changes are strictly contained within the lab environment and do not affect any external systems or networks. Each configuration change is documented below, along with the rationale for why it was applied.
 
 ### Windows Defender Real Time Protection Disabled
 ```powershell
@@ -133,6 +133,6 @@ Set-SmbServerConfiguration -RequireSecuritySignature $false -Force
 
 ## Configuration Notes
 
-- Windows 11 is running unactivated which restricts access to some built-in management tools such as lusrmgr.msc. All configuration was performed via PowerShell as Administrator to work around this limitation
+- Windows 11 is running unactivated, which restricts access to some built-in management tools such as lusrmgr.msc. All configuration was performed via PowerShell as Administrator to work around this limitation
 - All intentional vulnerability configurations are isolated to this VM on the LAN Segment and pose no risk to the host machine or external networks
-- A pre-exercise snapshot was taken after all vulnerability configurations were applied providing a clean restore point before running attack exercises
+- A pre-exercise snapshot was taken after all vulnerability configurations were applied, providing a clean restore point before running attack exercises
