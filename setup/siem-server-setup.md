@@ -1,6 +1,6 @@
 # Ubuntu Server - SIEM Setup
 
-This document covers the installation and configuration of the Ubuntu Server - SIEM virtual machine in the SOC homelab. Ubuntu Server - SIEM serves as the SIEM host, running the full Wazuh stack including the Wazuh Manager, Wazuh Indexer, and Wazuh Dashboard. Full Wazuh installation details are documented separately in [Wazuh Setup](wazuh-setup.md).
+This document covers the installation and configuration of the Ubuntu Server - SIEM virtual machine in the SOC homelab. Ubuntu Server - SIEM serves as the SIEM host, running the full Wazuh stack, including the Wazuh Manager, Wazuh Indexer, and Wazuh Dashboard. Full Wazuh installation details are documented separately in [Wazuh Setup](wazuh-setup.md).
 
 ## VM Specifications
 
@@ -17,7 +17,7 @@ This document covers the installation and configuration of the Ubuntu Server - S
 
 ## Installation
 
-Ubuntu Server - SIEM was installed as a virtual machine in VMware Workstation using the official Ubuntu Server ISO. During installation default settings were accepted with the exception of the network configuration which was set to the LAN Segment after installation was complete. No desktop environment was installed - Ubuntu Server runs headless via terminal only, which reduces resource usage and reflects how servers are typically managed in real enterprise environments. The official Ubuntu Server ISO can be downloaded from the [Ubuntu official download page](https://ubuntu.com/download/server).
+Ubuntu Server - SIEM was installed as a virtual machine in VMware Workstation using the official Ubuntu Server ISO. During installation, default settings were accepted with the exception of the network configuration, which was set to the LAN Segment after installation was complete. No desktop environment was installed - Ubuntu Server runs headless via terminal only, which reduces resource usage and reflects how servers are typically managed in real enterprise environments. The official Ubuntu Server ISO can be downloaded from the [Ubuntu official download page](https://ubuntu.com/download/server).
 
 Storage was allocated at 80GB, more generously than the other VMs, to accommodate Wazuh log and alert data accumulation over time as lab exercises are performed.
 
@@ -79,8 +79,6 @@ After installation, the system package list and all installed packages were upda
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
-
-![Ubuntu System Update](../images/ubuntu-system-update.png)
 
 ## Wazuh Services
 
