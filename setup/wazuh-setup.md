@@ -28,13 +28,22 @@ The full Wazuh stack consists of three components, all installed on Ubuntu Serve
 
 ## Prerequisites
 
-Before installing Wazuh ensure Ubuntu Server - SIEM is fully installed, the static IP is configured, and the system packages have been updated. Full details are documented in [Ubuntu Server - SIEM Setup](siem-server-setup.md).
+Before installing Wazuh ensure Ubuntu Server - SIEM is fully installed, the static IP is configured, and the system packages have been updated. Full details are documented in [Ubuntu Server - SIEM Setup](siem-server-setup.md). Internet access through [pfSense](pfsense-setup.md) is required to download the Wazuh installation script.
 
 ## Installation
 
 Wazuh was installed on Ubuntu Server - SIEM using the official Wazuh quickstart installation script, which automates the deployment of all three stack components in a single command. The official quickstart installation guide can be found at the [Wazuh Quickstart Installation Guide](https://documentation.wazuh.com/current/quickstart.html).
 
-The quickstart script handles all dependency installation, service configuration, and initial setup automatically. After the script completes all three Wazuh services are running and the dashboard is accessible via browser.
+Run the following command on Ubuntu Server - SIEM to download and execute the quickstart script:
+```bash
+curl -sO https://packages.wazuh.com/4.11/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
+```
+
+The quickstart script handles all dependency installation, service configuration, and initial setup automatically. After the script completes, all three Wazuh services are running, and the dashboard is accessible via browser.
+
+📸 Note the admin credentials displayed at the end of the installation output - these are required to log into the Wazuh dashboard.
+
+![Wazuh Installation](../images/wazuh-installation.png)
 
 ## Accessing the Dashboard
 
@@ -57,7 +66,7 @@ The screenshot below shows the Wazuh dashboard home page after successful login,
 
 ## Verifying Services
 
-After installation all three Wazuh services were verified as active and running using the following command on Ubuntu Server - SIEM:
+After installation, all three Wazuh services were verified as active and running using the following command on Ubuntu Server - SIEM:
 ```bash
 sudo systemctl is-active wazuh-manager.service wazuh-indexer.service wazuh-dashboard.service
 ```
@@ -73,7 +82,7 @@ wazuh-dashboard: active
 
 ## Agent Deployment
 
-After the Wazuh stack was confirmed operational a Wazuh agent was deployed on the Windows 11 target endpoint to begin forwarding security logs to the Wazuh Manager. The screenshot below shows the Windows 11 agent appearing as active in the Wazuh dashboard, confirming successful agent-to-manager communication. Full agent installation details are documented in [Wazuh Agent Setup](wazuh-agent-setup.md).
+After the Wazuh stack was confirmed operational, a Wazuh agent was deployed on the Windows 11 target endpoint to begin forwarding security logs to the Wazuh Manager. The screenshot below shows the Windows 11 agent appearing as active in the Wazuh dashboard, confirming successful agent-to-manager communication. Full agent installation details are documented in [Wazuh Agent Setup](wazuh-agent-setup.md).
 
 ![Wazuh Agent Dashboard](../images/wazuh-agent-dashboard.png)
 
@@ -90,15 +99,16 @@ sudo systemctl start wazuh-dashboard
 
 ### Wazuh Manager Timeout on Startup
 
-After the initial installation the Wazuh Manager service occasionally failed to start with a `failed (result: timeout)` error, indicating the service was taking too long to initialize and being killed by systemd before fully starting.
+After the initial installation, the Wazuh Manager service occasionally failed to start with a `failed (result: timeout)` error, indicating the service was taking too long to initialize and being killed by systemd before fully starting.
 
 **Root cause:** The issue was caused by insufficient system resources during startup when multiple services were initializing simultaneously after a cold boot.
 
-**Resolution:** A full reboot of the Ubuntu Server - SIEM VM resolved the issue. After the reboot all three Wazuh services started successfully and have been stable since.
+**Resolution:** A full reboot of the Ubuntu Server - SIEM VM resolved the issue. After the reboot, all three Wazuh services started successfully and have been stable since.
 
 ## Configuration Notes
 
 - The Wazuh dashboard uses a self-signed SSL certificate by default - the browser security warning on first access is expected and can be safely bypassed within the lab environment
 - Default dashboard credentials should be changed after the first login for security best practice, even within a lab environment
 - The Wazuh Manager stores all logs and alert data on the Ubuntu Server - SIEM disk - this is why 80GB storage was allocated to this VM to accommodate data accumulation over time
+- Internet access through [pfSense](pfsense-setup.md) is required for the initial installation - ensure pfSense is running before attempting to download the quickstart script
 - Full Wazuh documentation is available at [https://documentation.wazuh.com](https://documentation.wazuh.com)
