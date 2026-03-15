@@ -12,7 +12,7 @@ The lab consists of five virtual machines running on VMware Workstation. Each ma
 - **Ubuntu Server - SIEM (192.168.100.10)** - SIEM server running Wazuh, responsible for collecting and analyzing security logs from monitored endpoints
 - **Windows 11 Home (192.168.100.20)** - Target endpoint simulating a corporate workstation, monitored by a Wazuh agent
 - **Kali Linux (192.168.100.30)** - Attack machine used to simulate threat actor behavior against the Windows endpoint
-- **Ubuntu Server - SOAR (192.168.100.40)** - SOAR server running Shuffle and TheHive, responsible for automated alert triage, case management, and analyst notifications via Slack
+- **Ubuntu Server - SOAR (192.168.100.40)** - SOAR server running Shuffle and TheHive, responsible for automated alert triage, IOC enrichment via VirusTotal and AbuseIPDB, case management, and analyst notifications via Slack
 
 ## Network Design
 
@@ -20,7 +20,13 @@ The lab consists of five virtual machines running on VMware Workstation. Each ma
 
 All five virtual machines are connected through a VMware LAN Segment using the subnet **192.168.100.0/24**. pfSense sits at the network perimeter with two network adapters - a WAN adapter connected to VMware NAT for internet access, and a LAN adapter connected to the internal segment. All VMs use pfSense at 192.168.100.1 as their default gateway, meaning all internet-bound traffic is routed through pfSense before reaching the outside network. Internal VM to VM traffic stays on the LAN Segment and bypasses pfSense entirely. Each VM is assigned a static IP address to ensure consistent communication between machines. For a full breakdown of IP assignments, see [Static IP Configuration](static-ip-configuration.md).
 
-Traffic flow in the lab operates across three paths. Attack traffic flows from Kali Linux toward the Windows 11 endpoint, simulating a threat actor targeting a corporate workstation. Log and alert data flows from the Wazuh agent on Windows 11 to the Wazuh Manager on the Ubuntu Server - SIEM, where it is processed and triggers automated response workflows. Automation and notification data flows from Wazuh to Shuffle on the Ubuntu Server - SOAR, which creates cases in TheHive and sends notifications to the analyst via Slack. For a detailed view of how data moves through the full pipeline, see the [Data Flow Diagram](../images/data-flow-diagram.png).
+Traffic flow in the lab operates across three paths. Attack traffic flows from Kali Linux toward the Windows 11 endpoint, simulating a threat actor targeting a corporate workstation. Log and alert data flows from the Wazuh agent on Windows 11 to the Wazuh Manager on the Ubuntu Server - SIEM, where it is processed and triggers automated response workflows. Automation and notification data flows from Wazuh to Shuffle on the Ubuntu Server - SOAR, which enriches alert data with IOC lookups via VirusTotal and AbuseIPDB, creates cases in TheHive, and sends notifications to the analyst via Slack.
+
+## Data Flow
+
+![Data Flow Diagram](../images/data-flow-diagram.png)
+
+The diagram above illustrates how data moves through the full SOC pipeline. Attack traffic originates from Kali Linux and hits the Windows 11 endpoint, where Sysmon and the Wazuh agent capture and forward logs to Wazuh on Ubuntu Server - SIEM. When a qualifying alert fires, Shuffle on Ubuntu Server - SOAR automates the response workflow - querying VirusTotal and AbuseIPDB to enrich the alert with IOC context, creating a case in TheHive with the enriched findings, and sending a Slack notification to the analyst. The analyst then investigates through the TheHive dashboard and cross references raw logs in the Wazuh dashboard.
 
 ## Machine Roles & Responsibilities
 
@@ -37,11 +43,11 @@ Windows 11 Home serves as the simulated corporate workstation and primary attack
 Kali Linux serves as the simulated threat actor machine. It is used to perform attack exercises against the Windows 11 endpoint, such as network scanning, brute force attacks, and exploitation attempts. No Wazuh agent is installed on Kali, as it is the source of attacks rather than a monitored endpoint. Kali has no special configuration beyond static IP assignment and standard package updates. Full setup details are documented in [Kali Linux Setup](../setup/kali-setup.md).
 
 ### Ubuntu Server - SOAR (192.168.100.40)
-Ubuntu Server - SOAR runs the full SOAR stack for the lab, including Shuffle for automation workflows and TheHive for case management. When Wazuh generates an alert, it triggers a Shuffle webhook, which automatically creates a case in TheHive and sends a Slack notification to the analyst. This automates the first stage of alert triage and replicates the kind of SOAR pipeline used in real SOC environments. Full installation details are documented in [Ubuntu Server — SOAR Setup](../setup/soar-server-setup.md), [Shuffle Setup](../setup/shuffle-setup.md), and [TheHive Setup](../setup/thehive-setup.md).
+Ubuntu Server - SOAR runs the full SOAR stack for the lab, including Shuffle for automation workflows and TheHive for case management. When Wazuh generates an alert, it triggers a Shuffle webhook, which enriches the alert data by querying VirusTotal and AbuseIPDB for IOC context, automatically creates a case in TheHive with the enriched findings, and sends a Slack notification to the analyst. This automates the first stage of alert triage and replicates the kind of SOAR pipeline used in real SOC environments. Full installation details are documented in [Ubuntu Server - SOAR Setup](../setup/soar-server-setup.md), [Shuffle Setup](../setup/shuffle-setup.md), and [TheHive Setup](../setup/thehive-setup.md).
 
 ## Security Monitoring Stack
 
-The monitoring and response pipeline works as follows. The Wazuh agent installed on Windows 11 continuously collects Windows Event Logs and Sysmon logs from the endpoint. These logs are forwarded in real time over the LAN Segment to the Wazuh Manager running on Ubuntu Server — SIEM (192.168.100.10). The Wazuh Manager processes incoming logs against its built-in detection ruleset and generates alerts for suspicious or noteworthy activity. When a qualifying alert fires, a webhook triggers Shuffle on Ubuntu Server - SOAR (192.168.100.40), which runs an automated workflow to create a case in TheHive and send a Slack notification to the analyst. The analyst then investigates the case through the TheHive dashboard and cross references findings in the Wazuh dashboard. This setup replicates a complete SOC detection and response workflow - from attack through detection, automation, case creation, and investigation. Full details on the monitoring stack are documented in [Wazuh Agent Setup](../setup/wazuh-agent-setup.md) and [Sysmon Setup](../setup/sysmon-setup.md).
+The monitoring and response pipeline works as follows. The Wazuh agent installed on Windows 11 continuously collects Windows Event Logs and Sysmon logs from the endpoint. These logs are forwarded in real time over the LAN Segment to the Wazuh Manager running on Ubuntu Server — SIEM (192.168.100.10). The Wazuh Manager processes incoming logs against its built-in detection ruleset and generates alerts for suspicious or noteworthy activity. When a qualifying alert fires, a webhook triggers Shuffle on Ubuntu Server - SOAR (192.168.100.40), which runs an automated workflow to enrich the alert with IOC data from VirusTotal and AbuseIPDB, create a case in TheHive with the enriched findings, and send a Slack notification to the analyst. The analyst then investigates the case through the TheHive dashboard and cross references findings in the Wazuh dashboard. This setup replicates a complete SOC detection and response workflow - from attack through detection, automation, case creation, and investigation. Full details on the monitoring stack are documented in [Wazuh Agent Setup](../setup/wazuh-agent-setup.md) and [Sysmon Setup](../setup/sysmon-setup.md).
 
 ## Design Decisions & Rationale
 
@@ -62,6 +68,9 @@ Out of the box, Windows 11 blocks most attack techniques through Defender, the f
 
 **Why Slack for analyst notifications:**
 Slack is free, widely used in real SOC and IT environments, and has native integration with Shuffle. Using Slack for alert notifications mirrors how many real SOC teams handle analyst alerting and mirrors a tool the analyst would already be familiar with in a professional environment.
+
+**Why VirusTotal and AbuseIPDB for IOC enrichment:**
+Automatically querying threat intelligence sources during alert triage adds critical context that helps an analyst determine whether an alert is a genuine threat or a false positive. VirusTotal provides file hash, URL, and IP reputation data aggregated from dozens of antivirus engines and threat feeds. AbuseIPDB provides IP reputation data specifically focused on reported malicious activity. Both offer free API tiers sufficient for homelab usage and are widely used in real SOC environments as first-line enrichment sources.
 
 ## Known Limitations
 
