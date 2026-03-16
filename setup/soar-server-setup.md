@@ -132,7 +132,7 @@ ping 192.168.100.1
 ## Configuration Notes
 
 - Ubuntu Server - SOAR runs headless with no desktop environment installed, reducing RAM and CPU overhead and leaving more resources available for the SOAR stack
-- 8GB RAM was allocated to accommodate the memory requirements of both Shuffle and TheHive running simultaneously
+- 16GB RAM was allocated to accommodate the memory requirements of both Shuffle and TheHive running simultaneously
 - 80GB storage was allocated to accommodate TheHive case data and Docker container storage accumulation over time
 - All SOAR services start automatically on boot via Docker, meaning the SOAR stack is fully operational as soon as the VM boots without manual intervention
 - The Shuffle dashboard is accessible via browser from the Windows 11 VM at `http://192.168.100.40:3001`
