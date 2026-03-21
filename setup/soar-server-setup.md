@@ -50,11 +50,11 @@ The following configuration was applied during installation:
 | Name servers | 192.168.100.1 |
 | Search domains | leave blank |
 
-The screenshot below shows the output of the command `ip a`, confirming the static IP address is active on the Ubuntu Server - SOAR VM.
+The screenshot below shows the output of `ip a` confirming the static IP address is active on the Ubuntu Server - SOAR VM.
 
 ![SOAR IP Configuration](../images/soar-ip-config.png)
 
-The screenshot below shows the output of the command `ip route`, confirming the default gateway is correctly set to 192.168.100.1.
+The screenshot below shows the output of `ip route` confirming the default gateway is correctly set to 192.168.100.1.
 
 ![SOAR IP Route](../images/soar-ip-route.png)
 
@@ -65,37 +65,16 @@ After installation, the system package list and all installed packages were upda
 sudo apt update && sudo apt upgrade -y
 ```
 
+![SOAR System Update](../images/soar-system-update.png)
+
 ## Docker Installation
 
-Docker is required to run Shuffle and TheHive. Docker was installed on Ubuntu Server - SOAR using the official Docker installation method for Ubuntu. The official Docker installation guide for Ubuntu can be found at the [Docker Engine Installation Guide](https://docs.docker.com/engine/install/ubuntu/).
-
-Install Docker dependencies:
+Docker is required to run Shuffle. Docker was installed on Ubuntu Server - SOAR using the official Docker convenience script, which automatically detects the OS, adds the repository, and installs Docker in a single command. The official Docker installation guide for Ubuntu can be found at the [Docker Engine Installation Guide](https://docs.docker.com/engine/install/ubuntu/).
 ```bash
-sudo apt install ca-certificates curl gnupg -y
+curl -fsSL https://get.docker.com | sh
 ```
 
-Add Docker's official GPG key:
-```bash
-sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
-```
-
-Add the Docker repository:
-```bash
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-```
-
-Install Docker:
-```bash
-sudo apt update
-sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-```
-
-Verify Docker is running:
+After installation, verify Docker is running:
 ```bash
 sudo systemctl status docker
 ```
@@ -104,16 +83,29 @@ Expected output should show **active (running)**.
 
 ![Docker Running](../images/soar-docker-running.png)
 
+Add your user to the Docker group to run Docker commands without sudo:
+```bash
+sudo usermod -aG docker soarsadmin
+newgrp docker
+```
+
 ## SOAR Services
 
-Shuffle and TheHive are installed and running on Ubuntu Server - SOAR. Both services are configured to start automatically on boot via Docker. Shuffle is configured to enrich incoming Wazuh alerts with IOC data from VirusTotal and AbuseIPDB before creating cases in TheHive and sending Slack notifications to the analyst. Full installation details are documented in [Shuffle Setup](shuffle-setup.md) and [TheHive Setup](thehive-setup.md). The official TheHive Docker installation guide can be found at the [TheHive Docker Deployment Guide](https://docs.strangebee.com/thehive/installation/docker/).
+Shuffle and TheHive are installed and running on Ubuntu Server - SOAR. Shuffle runs via Docker and is configured to enrich incoming Wazuh alerts with IOC data from VirusTotal and AbuseIPDB before creating cases in TheHive and sending Slack notifications to the analyst. TheHive runs as a standalone service alongside Cassandra and Elasticsearch. Full installation details are documented in [Shuffle Setup](shuffle-setup.md) and [TheHive Setup](thehive-setup.md).
 
-To verify both services are running:
+To verify Shuffle containers are running:
 ```bash
 sudo docker ps
 ```
 
-The screenshot below confirms all SOAR services are active and running.
+To verify that TheHive and its dependencies are running:
+```bash
+sudo systemctl status cassandra
+sudo systemctl status elasticsearch
+sudo systemctl status thehive
+```
+
+The screenshot below confirms all Shuffle containers are active and running.
 
 ![SOAR Services Running](../images/soar-services-running.png)
 
@@ -132,9 +124,9 @@ ping 192.168.100.1
 ## Configuration Notes
 
 - Ubuntu Server - SOAR runs headless with no desktop environment installed, reducing RAM and CPU overhead and leaving more resources available for the SOAR stack
-- 20GB RAM was allocated to accommodate the memory requirements of both Shuffle and TheHive running simultaneously
+- 20GB RAM and 4 CPUs were allocated to meet the minimum requirements for TheHive, alongside Shuffle running simultaneously
 - 80GB storage was allocated to accommodate TheHive case data and Docker container storage accumulation over time
-- All SOAR services start automatically on boot via Docker, meaning the SOAR stack is fully operational as soon as the VM boots without manual intervention
+- Shuffle containers are configured to start automatically on boot via Docker. TheHive, Cassandra, and Elasticsearch are configured to start automatically on boot via systemctl enable
 - The Shuffle dashboard is accessible via browser from the Windows 11 VM at `http://192.168.100.40:3001`
 - The TheHive dashboard is accessible via browser from the Windows 11 VM at `http://192.168.100.40:9000`
 - Internet access is available through [pfSense](pfsense-setup.md) via VMware NAT for Docker installation, tool downloads, Slack notification delivery, and IOC enrichment queries to VirusTotal and AbuseIPDB
