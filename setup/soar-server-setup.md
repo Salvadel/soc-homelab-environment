@@ -65,8 +65,6 @@ After installation, the system package list and all installed packages were upda
 sudo apt update && sudo apt upgrade -y
 ```
 
-![SOAR System Update](../images/soar-system-update.png)
-
 ## Docker Installation
 
 Docker is required to run Shuffle. Docker was installed on Ubuntu Server - SOAR using the official Docker convenience script, which automatically detects the OS, adds the repository, and installs Docker in a single command. The official Docker installation guide for Ubuntu can be found at the [Docker Engine Installation Guide](https://docs.docker.com/engine/install/ubuntu/).
@@ -107,7 +105,7 @@ sudo systemctl status thehive
 
 The screenshot below confirms all Shuffle containers are active and running.
 
-![SOAR Services Running](../images/soar-services-running.png)
+![SOAR Services Running](../images/thehive-services-running.png)
 
 ## Connectivity Verification
 
