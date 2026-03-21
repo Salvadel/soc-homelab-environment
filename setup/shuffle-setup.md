@@ -42,7 +42,7 @@ docker ps
 
 You should see several Shuffle containers all showing `Up` status.
 
-![Shuffle Containers Running](../images/soar-docker-running.png)
+![Shuffle Containers Running](../images/shuffle-container-running.png)
 
 ## Accessing the Dashboard
 
