@@ -39,10 +39,6 @@ wget -q -O /tmp/install_script.sh https://scripts.download.strangebee.com/latest
 
 When prompted, select option **2 - Install TheHive**. The script handles all dependency installation, service configuration, and initial setup automatically.
 
-📸 Note - Cassandra requires several minutes to fully initialize after installation. Wait at least 5 minutes before attempting to access the TheHive dashboard.
-
-![TheHive Installation](../images/thehive-installation.png)
-
 ## Enabling Services on Boot
 
 After installation, all three services were enabled to start automatically on boot:
