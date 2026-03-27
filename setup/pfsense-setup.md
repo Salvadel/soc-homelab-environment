@@ -93,7 +93,7 @@ A self-signed SSL certificate is used by default, which causes the browser to di
 
 The screenshot below shows the pfSense dashboard and interface overview, confirming WAN and LAN interfaces are active, and the firewall is operational.
 
-![pfSense Dashboard](../images/pfsense-dashboard.png)
+![pfSense Dashboard](../images/pfsense-console.png)
 
 ## Connectivity Verification
 
