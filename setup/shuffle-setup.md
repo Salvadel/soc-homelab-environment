@@ -42,7 +42,47 @@ docker ps
 
 You should see several Shuffle containers all showing `Up` status.
 
-![Shuffle Containers Running](../images/shuffle-container-running.png)
+![Shuffle Containers Running](../images/shuffle-containers-running.png)
+
+## Docker Configuration
+
+After initial startup, several environment variables in `docker-compose.yml` required changes to allow Shuffle to execute workflow nodes correctly. The default configuration is designed for multi-node Docker Swarm deployments and does not work correctly on a single-node lab setup without adjustment.
+
+Navigate to the Shuffle directory and open the compose file:
+```bash
+cd ~/Shuffle
+nano docker-compose.yml
+```
+
+The following changes were made to the `orborus` service environment section:
+
+**Disable Swarm mode** - The default `SHUFFLE_SWARM_CONFIG=run` causes Orborus to attempt deploying workers as Docker Swarm services, which fails on a single-node setup. Set it to `off` to use standard Docker containers instead:
+```yaml
+- SHUFFLE_SWARM_CONFIG=off
+```
+
+**Set the worker server URL** - `SHUFFLE_WORKER_SERVER_URL` was empty by default, causing Orborus to fall back to an unresolvable hostname. Set it to the SOAR server's LAN IP:
+```yaml
+- SHUFFLE_WORKER_SERVER_URL=http://192.168.100.40:33333
+```
+
+**Set the correct backend URL** - `BASE_URL` must point to the backend container using its internal Docker hostname and backend port, not the frontend port:
+```yaml
+- BASE_URL=http://shuffle-backend:5001
+```
+
+After making these changes, restart the containers:
+```bash
+docker compose down
+docker compose up -d
+```
+
+Verify Orborus is connecting to the backend correctly:
+```bash
+docker logs shuffle-orborus --tail 20
+```
+
+The log should show `Got statuscode 200 from backend on first request` and `New Worker created` entries, indicating the execution engine is functioning.
 
 ## Accessing the Dashboard
 
@@ -74,8 +114,6 @@ Wazuh is configured to forward alerts to Shuffle via a webhook trigger. When a q
 http://192.168.100.40:3001/api/v1/hooks/webhook_XXXXXXXX
 ```
 
-![shuffle webhook](../images/shuffle-webhook.png)
-
 ### Step 2 - Configure Wazuh to Forward Alerts
 
 On Ubuntu Server - SIEM, edit the Wazuh Manager configuration file:
@@ -88,83 +126,85 @@ Add the following integration block before the closing `</ossec_config>` tag:
 <integration>
   <name>shuffle</name>
   <hook_url>http://192.168.100.40:3001/api/v1/hooks/webhook_XXXXXXXX</hook_url>
-  <level>3</level>
+  <level>7</level>
   <alert_format>json</alert_format>
 </integration>
 ```
 
-Replace `webhook_XXXXXXXX` with your actual webhook URL copied from Shuffle. The `<level>3</level>` setting means only alerts of severity level 3 and above are forwarded to Shuffle.
+Replace `webhook_XXXXXXXX` with your actual webhook URL copied from Shuffle. The `<level>7</level>` setting means only alerts of severity level 7 and above are forwarded to Shuffle.
 
 Restart the Wazuh Manager to apply the change:
 ```bash
 sudo systemctl restart wazuh-manager
 ```
 
+![Wazuh Integration Block](../images/shuffle-wazuh-integration.png)
+
 ## IOC Enrichment
 
-Shuffle is configured to automatically enrich incoming Wazuh alerts with threat intelligence data by querying VirusTotal and AbuseIPDB for the source IP address extracted from each alert.
+Shuffle is configured to automatically enrich incoming Wazuh alerts with threat intelligence data by querying VirusTotal and AbuseIPDB for the source IP address extracted from each alert. Both enrichment nodes run in parallel immediately after the webhook trigger.
 
 ### VirusTotal Integration
 
 A free VirusTotal API key is required. Register at [https://www.virustotal.com](https://www.virustotal.com) to obtain a free API key.
 
 In the Shuffle workflow editor:
-- Add a **VirusTotal** app action after the webhook trigger
+- Add a **VirusTotal** app action connected directly to the webhook trigger
 - Select the **Get IP Report** action
 - Enter your VirusTotal API key in the authentication field
-- Set the IP field to the source IP extracted from the Wazuh alert using the variable:
-```
-$exec.all_fields.data.srcip
-```
-
-![shuffle virustotal](shuffle-virustotal.png)
+- Set the IP field to the source IP extracted from the Wazuh alert
 
 ### AbuseIPDB Integration
 
 A free AbuseIPDB API key is required. Register at [https://www.abuseipdb.com](https://www.abuseipdb.com) to obtain a free API key.
 
 In the Shuffle workflow editor:
-- Add an **AbuseIPDB** app action after the VirusTotal action
+- Add an **AbuseIPDB** app action connected directly to the webhook trigger, parallel to the VirusTotal node
 - Select the **Check IP** action
 - Enter your AbuseIPDB API key in the authentication field
-- Set the IP field to the same source IP variable:
-```
-$exec.all_fields.data.srcip
-```
-
-![shuffle AbuseIDB](shuffle-abuseidb.png)
+- Set the IP field to the same source IP variable used for VirusTotal
 
 ## TheHive Integration
 
-Shuffle is configured to automatically create a case in TheHive for each qualifying Wazuh alert, enriched with the IOC data from VirusTotal and AbuseIPDB.
+Shuffle creates an alert in TheHive for each qualifying Wazuh alert using an HTTP node pointed directly at the TheHive API. The native Shuffle TheHive app was not used due to a variable resolution bug in the installed version that caused `$exec.*` variables to be sent as literal strings instead of resolved values.
 
-### Step 1 - Add TheHive App to Workflow
+In the Shuffle workflow editor, add an **HTTP** app action connected after both the VirusTotal and AbuseIPDB nodes and configure it as follows:
 
-In the Shuffle workflow editor:
-- Add a **TheHive** app action after the AbuseIPDB action
-- Select the **Create Alert** action
-- Enter the TheHive URL:
+**Method:** `POST`
+
+**URL:**
 ```
-http://192.168.100.40:9000
+http://172.17.0.1:9000/api/v1/alert
 ```
-- Enter the Shuffle integration user API key generated in TheHive. Full details on the API key are documented in [TheHive Setup](thehive-setup.md)
 
-### Step 2 - Configure Case Fields
+The IP `172.17.0.1` is the Docker bridge gateway address, which is how containers reach services running on the host machine. Using the LAN IP `192.168.100.40` does not work from inside Docker containers.
 
-Map the following fields from the Wazuh alert to the TheHive case:
+**Headers:**
+```
+Authorization: Bearer YOUR_THEHIVE_API_KEY
+Content-Type: application/json
+```
 
-| TheHive Field | Shuffle Variable |
-|---|---|
-| Title | `$exec.all_fields.rule.description` |
-| Severity | `$exec.all_fields.rule.level` |
-| Description | `$exec.all_fields.full_log` |
-| Source IP | `$exec.all_fields.data.srcip` |
+Use the API key generated for the `shuffle@soc.local` user in TheHive. Full details on the API key are documented in [TheHive Setup](thehive-setup.md).
 
-![shuffle integration thehive](shuffle-thehive-integration.png)
+**Body:**
+```json
+{
+  "title": "$exec.title",
+  "description": "$exec.title",
+  "severity": $exec.severity,
+  "type": "internal",
+  "source": "Wazuh",
+  "sourceRef": "$exec.id",
+  "tags": ["wazuh", "automated"]
+}
+```
+
+Note that `$exec.severity` has no quotes because TheHive expects an integer, not a string.
 
 ## Slack Integration
 
-Shuffle is configured to send a Slack notification to the analyst when a new case is created in TheHive.
+Shuffle sends a Slack notification after the TheHive alert is created using an HTTP node pointed at the Slack incoming webhook URL.
 
 ### Step 1 - Create a Slack Workspace and Webhook
 
@@ -176,52 +216,42 @@ Shuffle is configured to send a Slack notification to the analyst when a new cas
 https://hooks.slack.com/services/XXXXXXXX/XXXXXXXX/XXXXXXXX
 ```
 
-### Step 2 - Add Slack App to Workflow
+### Step 2 - Add Slack HTTP Node to Workflow
 
-In the Shuffle workflow editor:
-- Add a **Slack** app action after the TheHive action
-- Select the **Send Message** action
-- Enter your Slack webhook URL
-- Configure the message to include key alert details:
-```
-New SOC Alert - $exec.all_fields.rule.description
-Severity: $exec.all_fields.rule.level
-Source IP: $exec.all_fields.data.srcip
-TheHive Case Created - Investigate at http://192.168.100.40:9000
+In the Shuffle workflow editor, add an **HTTP** app action connected after the TheHive node and configure it as follows:
+
+**Method:** `POST`
+
+**URL:** Your Slack webhook URL
+
+**Body:**
+```json
+{"text": "Wazuh Alert | Rule ID: $exec.rule_id | Severity: $exec.severity | Agent: $exec.all_fields.agent.name | TheHive ID: $http_1.body._id"}
 ```
 
-![shuffle slack integration](shuffle-slack-integration.png)
+The body uses pipe separators instead of newlines to avoid JSON parsing errors caused by special characters in alert titles. `$http_1.body._id` references the TheHive alert ID returned by the previous HTTP node, providing a direct reference to the created alert.
+
+![Slack Alert Received](../images/slack-alert-received.png)
 
 ## Complete Workflow
 
-The completed Shuffle workflow connects all five steps into a single automated pipeline:
+The completed Shuffle workflow connects all five steps into a single automated pipeline. 
+
 ```
 Wazuh Alert
-    ↓
+    |
 Webhook Trigger
-    ↓
-VirusTotal IOC Lookup
-    ↓
-AbuseIPDB IOC Lookup
-    ↓
-TheHive Case Created
-    ↓
+    |
+VirusTotal         
+    |
+AbuseIPDB
+    |
+TheHive Alert Created
+    |
 Slack Notification Sent
 ```
 
-![shuffle workflow](shuffle-workflow-complete.png)
-
-## Testing the Workflow
-
-To verify the full pipeline is working, trigger a test alert from Kali Linux and confirm:
-
-1. The alert appears in the Wazuh dashboard
-2. Shuffle receives the webhook and runs the workflow
-3. VirusTotal and AbuseIPDB return IOC data
-4. A case is created in TheHive with enriched details
-5. A Slack notification is received in the `#soc-alerts` channel
-
-Full end-to-end testing is documented in the [SIEM to SOAR Automation project](../projects/01-siem-soar-automation/testing-and-results.md).
+![Shuffle Execution Success](../images/shuffle-execution-success.png)
 
 ## Troubleshooting Encountered
 
@@ -233,11 +263,37 @@ After starting the containers with `docker compose up -d` the Shuffle dashboard 
 
 **Resolution:** Waiting 3-5 minutes after container startup and retrying the browser resolved the issue.
 
+### Workflow Nodes Hanging on Execution
+
+Workflow nodes, including basic echo tests, would hang indefinitely with no result.
+
+**Root cause:** Three misconfigured environment variables in `docker-compose.yml` prevented Orborus from spawning and communicating with worker containers. `SHUFFLE_SWARM_CONFIG=run` caused Orborus to attempt Docker Swarm service deployments which fails on a single-node setup. `SHUFFLE_WORKER_SERVER_URL` was empty, causing Orborus to fall back to an unresolvable hostname. `BASE_URL` pointed to the frontend port 3001 instead of the backend port 5001.
+
+**Resolution:** Set `SHUFFLE_SWARM_CONFIG=off`, `SHUFFLE_WORKER_SERVER_URL=http://192.168.100.40:33333`, and `BASE_URL=http://shuffle-backend:5001` in the orborus service environment section of `docker-compose.yml`, then restarted the containers.
+
+### TheHive Alerts Returning 400 Invalid JSON
+
+The native Shuffle TheHive app returned a 400 Bad Request error with an `Unrecognized token '$'` message.
+
+**Root cause:** A variable resolution bug in the installed version of the Shuffle TheHive app caused `$exec.*` variables to be sent as literal strings instead of resolved values.
+
+**Resolution:** Replaced the native TheHive app with an HTTP node configured to POST directly to `http://172.17.0.1:9000/api/v1/alert`. The HTTP node resolves Shuffle variables correctly before sending the request.
+
+### Slack Notifications Returning SyntaxError
+
+The Slack HTTP node returned a `SyntaxError - unterminated string literal` when alert titles were interpolated into the message body.
+
+**Root cause:** Wazuh rule descriptions, such as CIS benchmark titles, contain apostrophes and quotes that break JSON string parsing when used directly in the message body.
+
+**Resolution:** Replaced `$exec.title` in the Slack body with fields that only contain safe characters - `$exec.rule_id`, `$exec.severity`, `$exec.all_fields.agent.name`, and `$http_1.body._id`.
+
 ## Configuration Notes
 
-- Shuffle runs via Docker and starts automatically on boot
+- Shuffle runs via Docker Compose and starts automatically on boot
 - The Shuffle dashboard is accessible at `http://192.168.100.40:3001`
-- The Wazuh integration forwards alerts of severity level 3 and above to Shuffle
+- Docker Compose configuration is located at `~/Shuffle/docker-compose.yml`
+- The Wazuh integration forwards alerts of severity level 7 and above to Shuffle
+- TheHive is reached from inside Shuffle using the Docker bridge gateway `172.17.0.1` rather than the LAN IP
 - VirusTotal free tier allows 4 API lookups per minute, which is sufficient for homelab usage
 - AbuseIPDB free tier allows 1000 lookups per day, which is sufficient for homelab usage
 - The complete workflow connects Wazuh, VirusTotal, AbuseIPDB, TheHive, and Slack in a single automated pipeline
