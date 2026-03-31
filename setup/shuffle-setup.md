@@ -42,7 +42,7 @@ docker ps
 
 You should see several Shuffle containers all showing `Up` status.
 
-![Shuffle Containers Running](../images/shuffle-containers-running.png)
+![Shuffle Containers Running](../images/shuffle-container-running.png)
 
 ## Docker Configuration
 
@@ -231,7 +231,7 @@ In the Shuffle workflow editor, add an **HTTP** app action connected after the T
 
 The body uses pipe separators instead of newlines to avoid JSON parsing errors caused by special characters in alert titles. `$http_1.body._id` references the TheHive alert ID returned by the previous HTTP node, providing a direct reference to the created alert.
 
-![Slack Alert Received](../images/slack-alert-received.png)
+![Slack Alert Received](../images/slack-alert-recieved.png)
 
 ## Complete Workflow
 
