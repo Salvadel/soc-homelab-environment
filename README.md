@@ -44,13 +44,6 @@ soc-homelab/
 │   ├── shuffle-setup.md
 │   └── thehive-setup.md
 ├── projects/
-│   └── 01-siem-soar-automation/
-│       ├── README.md
-│       ├── overview.md
-│       ├── shuffle-workflow.md
-│       ├── thehive-integration.md
-│       ├── testing-and-results.md
-│       └── images/
 └── images/
 ```
 
