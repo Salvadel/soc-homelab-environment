@@ -79,7 +79,7 @@ Documented projects performed by the SOC-lab, full documentation, photos, and me
 
 | Project | Description |
 |---|---|
-| Coming soon | - |
+| [Threat Simulation and Triage](projects/threat-simulation-and-triage/README.md) | Simulated reconnaissance and brute force attack against the Windows 11 endpoint, with full detection, automated triage via Shuffle and TheHive, and analyst investigation |
 
 #### To Be Added
 Firewall and logging capabilities are currently being implemented in the pfSense router; documentation is not yet available.
