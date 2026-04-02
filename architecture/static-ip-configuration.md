@@ -31,7 +31,7 @@ The ping tests below verify that all critical communication paths required for t
 - **Windows 11 to Ubuntu Server - SIEM** - confirms the Wazuh agent can reach the Wazuh Manager
 - **Windows 11 to pfSense Gateway** - confirms that workstation can access internet
 - **Ubuntu Server - SIEM to Ubuntu Server - SOAR** - confirms the SIEM can forward alerts to the SOAR server
-- **Ubuntu Server - SOAR to pfsense Gateway** - confirms the SOAR server can access the internet to send alerts via email
+- **Ubuntu Server - SOAR to pfsense Gateway** - confirms the SOAR server can access the internet to send alerts via slack
 
 ### Kali Linux → Windows 11
 ```
