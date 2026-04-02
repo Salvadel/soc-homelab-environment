@@ -124,7 +124,7 @@ ping 192.168.100.1
 - Ubuntu Server - SOAR runs headless with no desktop environment installed, reducing RAM and CPU overhead and leaving more resources available for the SOAR stack
 - 20GB RAM and 4 CPUs were allocated to meet the minimum requirements for TheHive, alongside Shuffle running simultaneously
 - 80GB storage was allocated to accommodate TheHive case data and Docker container storage accumulation over time
-- Shuffle containers are configured to start automatically on boot via Docker. TheHive, Cassandra, and Elasticsearch are configured to start automatically on boot via systemctl enable
+- Shuffle containers are configured to start automatically on boot via Docker Compose. TheHive, Cassandra, and Elasticsearch are configured to start automatically on boot via the StrangeBee installation script
 - The Shuffle dashboard is accessible via browser from the Windows 11 VM at `http://192.168.100.40:3001`
 - The TheHive dashboard is accessible via browser from the Windows 11 VM at `http://192.168.100.40:9000`
 - Internet access is available through [pfSense](pfsense-setup.md) via VMware NAT for Docker installation, tool downloads, Slack notification delivery, and IOC enrichment queries to VirusTotal and AbuseIPDB
