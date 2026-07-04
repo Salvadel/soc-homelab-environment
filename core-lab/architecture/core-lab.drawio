@@ -1,0 +1,46 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36">
+  <diagram name="Page-1" id="bVGCPcYohKI7EmtHxDsR">
+    <mxGraphModel dx="675" dy="1959" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_DdBfgO-pDd5EFAp69-c-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6d8764;strokeColor=#3A5431;fontColor=#ffffff;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Cybersecurity Homelab - Network Topology&amp;nbsp; Diagram&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="690" x="20" as="geometry" />
+        </mxCell>
+        <mxCell id="_DdBfgO-pDd5EFAp69-c-9" edge="1" parent="1" source="_DdBfgO-pDd5EFAp69-c-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" target="_DdBfgO-pDd5EFAp69-c-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_DdBfgO-pDd5EFAp69-c-3" parent="1" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#6c8ebf;shadow=0;dashed=0;shape=mxgraph.ios7.icons.cloud;fillColor=#dae8fc;" value="&lt;b&gt;&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 16px;&quot;&gt;ISP&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="90" width="150" x="102.5" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="_DdBfgO-pDd5EFAp69-c-10" edge="1" parent="1" source="_DdBfgO-pDd5EFAp69-c-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=1;" target="_DdBfgO-pDd5EFAp69-c-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_DdBfgO-pDd5EFAp69-c-4" parent="1" style="image;html=1;image=img/lib/clip_art/networking/Firewall_02_128x128.png" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Firewall&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="110" width="110" x="422.5" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="_DdBfgO-pDd5EFAp69-c-13" edge="1" parent="1" source="_DdBfgO-pDd5EFAp69-c-5" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;startArrow=classic;startFill=1;" target="_DdBfgO-pDd5EFAp69-c-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_DdBfgO-pDd5EFAp69-c-5" parent="1" style="image;html=1;image=img/lib/clip_art/networking/Wireless_Router_N_128x128.png" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Wireless Gateway&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="130" width="110" x="332.5" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="_DdBfgO-pDd5EFAp69-c-6" parent="1" style="image;points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image=img/lib/allied_telesis/computer_and_terminals/Personal_Computer.svg;imageBorder=default;strokeWidth=2;imageBackground=#00994D;fillStyle=dots;perimeterSpacing=5;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Windows 11 Home [End User]&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;192.168.20.20/24&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="131.8" width="97.25" x="332.5" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="_DdBfgO-pDd5EFAp69-c-7" parent="1" style="image;points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image=img/lib/allied_telesis/computer_and_terminals/Personal_Computer_with_Server.svg;imageBorder=default;strokeWidth=2;imageBackground=#FF0000;fillStyle=zigzag-line;perimeterSpacing=2;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Kali Linux [Attack Machine]&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;192.168.30.30/24&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="140" x="62.50000000000003" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="_DdBfgO-pDd5EFAp69-c-8" parent="1" style="image;html=1;image=img/lib/clip_art/computers/Server_Rack_128x128.png;imageBorder=default;imageBackground=#163DFF;fillStyle=cross-hatch;perimeterSpacing=4;strokeWidth=2;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Ubuntu Server [WAZUH SIEM]&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;192.168.10.10/24&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="135.9" width="125" x="542.5" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="_DdBfgO-pDd5EFAp69-c-11" edge="1" parent="1" source="_DdBfgO-pDd5EFAp69-c-5" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1.011;entryY=-0.022;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=classic;endFill=1;" target="_DdBfgO-pDd5EFAp69-c-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_DdBfgO-pDd5EFAp69-c-12" edge="1" parent="1" source="_DdBfgO-pDd5EFAp69-c-5" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.573;entryY=0.003;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" target="_DdBfgO-pDd5EFAp69-c-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
