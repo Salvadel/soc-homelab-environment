@@ -58,9 +58,9 @@ On first boot, pfSense prompts for interface assignment. With four network adapt
 | Interface | NIC | VMware LAN Segment | Purpose |
 |---|---|---|---|
 | WAN | em1 | NAT | Internet access via VMware NAT |
-| LAN10 | em2 | SOC-Lab-SIEM | Gateway for Wazuh SIEM segment |
-| LAN20 | em3 | SOC-Lab-Windows | Gateway for Windows 11 client segment |
-| LAN30 | em4 | SOC-Lab-Kali | Gateway for Kali Linux attack segment |
+| LAN | em2 | SOC-Lab-SIEM | Gateway for Wazuh SIEM segment |
+| OPT1 | em3 | SOC-Lab-Windows | Gateway for Windows 11 client segment |
+| OPT2 | em4 | SOC-Lab-Kali | Gateway for Kali Linux attack segment |
 
 The screenshot below confirms this mapping in the pfSense web GUI under Interfaces > Assignments.
 
