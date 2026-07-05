@@ -125,7 +125,7 @@ https://192.168.20.1
 
 A self-signed SSL certificate is used by default, which causes the browser to display a security warning on first access. This is expected behavior - proceed by clicking **Advanced > Proceed** to access the dashboard.
 
-The screenshot below shows the pfSense dashboard confirming all four interfaces (WAN, LAN10, LAN20, LAN30) are active.
+The screenshot below shows the pfSense dashboard confirming all four interfaces (WAN, LAN, OTP1, OTP2) are active.
 
 ![pfSense Dashboard Overview](../images/pfsense-dashboard-overview.png)
 
@@ -135,11 +135,19 @@ At this stage of the lab, firewall rules have not been customized beyond what pf
 
 The screenshots below show the default rule state for each interface.
 
+WAN Interface:
+
 ![pfSense Firewall Rules - WAN](../images/pfsense-firewall-rules-wan.png)
+
+LAN Interface:
 
 ![pfSense Firewall Rules - SIEM Segment](../images/pfsense-firewall-rules-wazuh.png)
 
+OTP1 Interface:
+
 ![pfSense Firewall Rules - Windows Segment](../images/pfsense-firewall-rules-windows.png)
+
+OTP2 Interface:
 
 ![pfSense Firewall Rules - Kali Segment](../images/pfsense-firewall-rules-kali.png)
 
