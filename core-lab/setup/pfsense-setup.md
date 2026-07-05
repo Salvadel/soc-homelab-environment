@@ -62,7 +62,7 @@ On first boot, pfSense prompts for interface assignment. With four network adapt
 | OPT1 | em3 | SOC-Lab-Windows | Gateway for Windows 11 client segment |
 | OPT2 | em4 | SOC-Lab-Kali | Gateway for Kali Linux attack segment |
 
-The screenshot below confirms this mapping in the pfSense web GUI under Interfaces > Assignments.
+The screenshot below confirms this mapping in the pfSense interface.
 
 ![pfSense Interface Assignments](../images/pfsense-interface-assignments.png)
 
@@ -70,9 +70,9 @@ Each LAN interface was assigned a static IP acting as the default gateway for it
 
 | Interface | IP Address | Subnet Mask |
 |---|---|---|
-| LAN10 | 192.168.10.1 | 255.255.255.0 |
-| LAN20 | 192.168.20.1 | 255.255.255.0 |
-| LAN30 | 192.168.30.1 | 255.255.255.0 |
+| LAN | 192.168.10.1 | 255.255.255.0 |
+| OTP1 | 192.168.20.1 | 255.255.255.0 |
+| OTP2 | 192.168.30.1 | 255.255.255.0 |
 
 The screenshots below show each LAN interface configuration page.
 
