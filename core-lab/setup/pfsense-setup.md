@@ -76,11 +76,19 @@ Each LAN interface was assigned a static IP acting as the default gateway for it
 
 The screenshots below show each LAN interface configuration page.
 
+WAN Interface:
+
 ![pfSense WAN Interface Configuration](../images/pfsense-interface-wan-config.png)
+
+LAN Interface:
 
 ![pfSense LAN10 Interface Configuration](../images/pfsense-interface-lan10-config.png)
 
+OTP1 Interface:
+
 ![pfSense LAN20 Interface Configuration](../images/pfsense-interface-lan20-config.png)
+
+OTP2 Interface:
 
 ![pfSense LAN30 Interface Configuration](../images/pfsense-interface-lan30-config.png)
 
