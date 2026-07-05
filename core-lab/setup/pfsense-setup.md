@@ -139,19 +139,19 @@ WAN Interface:
 
 ![pfSense Firewall Rules - WAN](../images/pfsense-firewall-rules-wan.png)
 
-LAN Interface:
+LAN Interface (Wazuh):
 
 ![pfSense Firewall Rules - SIEM Segment](../images/pfsense-firewall-rules-wazuh.png)
 
-OTP1 Interface:
+OTP1 Interface (Windows):
 
 ![pfSense Firewall Rules - Windows Segment](../images/pfsense-firewall-rules-windows.png)
 
-OTP2 Interface:
+OTP2 Interface (Kali Linux):
 
 ![pfSense Firewall Rules - Kali Segment](../images/pfsense-firewall-rules-kali.png)
 
-Custom rule design, such as restricting the Kali segment from initiating traffic toward the Windows or SIEM segments except during controlled exercises, is planned as a future project and will be documented separately once implemented.
+Custom rule design will be implemented in future projects and will be documented separately once implemented.
 
 ## Connectivity Verification
 
@@ -181,5 +181,5 @@ ping 1.1.1.1
 - DNS queries from all VMs are forwarded upstream through pfSense to 8.8.8.8 and 1.1.1.1
 - The pfSense dashboard uses a self-signed SSL certificate by default - the browser security warning on first access is expected and can be safely bypassed within the lab environment
 - The default admin password was changed during the initial setup wizard
-- Firewall rules are currently at default state only, access control hardening between segments is deferred to a future project
+- Firewall rules are currently at the default state only; access control hardening between segments is deferred to a future project
 - Full pfSense documentation is available at [https://docs.netgate.com/pfsense/en/latest](https://docs.netgate.com/pfsense/en/latest)
