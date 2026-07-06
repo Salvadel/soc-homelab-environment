@@ -64,7 +64,7 @@ The screenshot below shows the Ubuntu Server VM hardware settings, confirming al
 
 ![Ubuntu Server VM Hardware Settings](../images/vmware-ubuntu-vm-hardware.png)
 
-Full installation and Wazuh configuration steps are covered in the [Ubuntu Server Setup](ubuntu-setup.md) document.
+Full installation and Wazuh configuration steps are covered in the [Ubuntu Server Setup](ubuntu-siem-server-setup.md) document.
 
 ### Windows 11 Client
 
