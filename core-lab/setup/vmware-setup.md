@@ -32,7 +32,7 @@ The lab consists of four virtual machines: one pfSense router/firewall and three
 
 ### pfSense (Router / Firewall)
 
-pfSense is installed from the official pfSense CE ISO, available at [https://www.pfsense.org/download](https://www.pfsense.org/download).
+pfSense is installed from the official pfSense CE ISO, available at [the official pfSense download](https://www.pfsense.org/download).
 
 | Property | Value |
 |---|---|
@@ -50,7 +50,7 @@ Full pfSense installation, interface assignment, and initial configuration are c
 
 ### Ubuntu Server (Wazuh SIEM)
 
-Ubuntu Server 24.04 LTS is used as a headless host for the Wazuh SIEM, installed from the official ISO at [https://ubuntu.com/download/server](https://ubuntu.com/download/server).
+Ubuntu Server 24.04 LTS is used as a headless host for the Wazuh SIEM, installed from the official ISO at [the official Ubuntu Server download](https://ubuntu.com/download/server).
 
 | Property | Value |
 |---|---|
@@ -68,7 +68,7 @@ Full installation and Wazuh configuration steps are covered in the [Ubuntu Serve
 
 ### Windows 11 Client
 
-The Windows 11 client is installed from the official Windows 11 ISO obtained through the Microsoft Media Creation Tool at [https://www.microsoft.com/software-download/windows11](https://www.microsoft.com/software-download/windows11). This VM also runs Sysmon to support endpoint log collection.
+The Windows 11 client is installed from the official Windows 11 ISO obtained through the Microsoft Media Creation Tool at [the official Microsoft website](https://www.microsoft.com/software-download/windows11). This VM also runs Sysmon to support endpoint log collection.
 
 | Property | Value |
 |---|---|
@@ -86,7 +86,7 @@ Full installation and Sysmon configuration steps are covered in the [Windows 11 
 
 ### Kali Linux (Attack Machine)
 
-Kali Linux uses the prebuilt VMware virtual machine image provided by Offensive Security, available at [https://www.kali.org/get-kali/#kali-virtual-machines](https://www.kali.org/get-kali/#kali-virtual-machines). This image only needs to be extracted and opened in VMware Workstation Pro, no manual OS installation is required.
+Kali Linux uses the prebuilt VMware virtual machine image provided by Offensive Security, available at [the official Kali download](https://www.kali.org/get-kali/#kali-virtual-machines). This image only needs to be extracted and opened in VMware Workstation Pro, no manual OS installation is required.
 
 | Property | Value |
 |---|---|
@@ -110,8 +110,8 @@ Each device VM connects to pfSense through its own dedicated VMware LAN Segment,
 |---|---|---|---|---|
 | pfSense (WAN) | NAT | Host assigned | DHCP via VMware NAT | N/A |
 | pfSense (LAN) | SOC-Lab-SIEM | 192.168.10.0/24 | 192.168.10.1 | N/A |
-| pfSense (OTP1) | SOC-Lab-Windows | 192.168.20.0/24 | 192.168.20.1 | N/A |
-| pfSense (OTP2) | SOC-Lab-Kali | 192.168.30.0/24 | 192.168.30.1 | N/A |
+| pfSense (OPT1) | SOC-Lab-Windows | 192.168.20.0/24 | 192.168.20.1 | N/A |
+| pfSense (OPT2) | SOC-Lab-Kali | 192.168.30.0/24 | 192.168.30.1 | N/A |
 | Ubuntu Server | SOC-Lab-SIEM | 192.168.10.0/24 | 192.168.10.10 | 192.168.10.1 |
 | Windows 11 Client | SOC-Lab-Windows | 192.168.20.0/24 | 192.168.20.20 | 192.168.20.1 |
 | Kali Linux | SOC-Lab-Kali | 192.168.30.0/24 | 192.168.30.30 | 192.168.30.1 |
