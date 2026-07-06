@@ -21,10 +21,6 @@ Ubuntu Server 24.04 LTS was installed as a virtual machine in VMware Workstation
 
 No desktop environment was installed; Ubuntu Server runs headless via terminal only, which reduces resource usage and reflects how servers are typically managed in real enterprise environments.
 
-The screenshot below confirms the Ubuntu Server VM is fully installed and operational.
-
-![Ubuntu Server Terminal](../images/ubuntu-terminal.png)
-
 ## Network Configuration
 
 A static IP address was manually assigned to the Ubuntu Server VM to ensure consistent addressing on the SOC-Lab-SIEM segment. This is important for Wazuh agent-to-manager communication, since monitored endpoints are configured to point to this fixed IP address.
