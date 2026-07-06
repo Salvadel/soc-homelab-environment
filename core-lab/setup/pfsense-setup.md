@@ -29,7 +29,7 @@ Each lab device sits on its own isolated LAN segment, connected to pfSense throu
 
 ## Installation
 
-pfSense CE 2.7.2 was installed as a virtual machine in VMware Workstation using the official pfSense CE ISO. The official pfSense CE ISO can be downloaded from [the official PfSense download](https://www.pfsense.org/download).
+pfSense CE 2.7.2 was installed as a virtual machine in VMware Workstation using the official pfSense CE ISO. The official pfSense CE ISO can be downloaded from [the official pfSense download](https://www.pfsense.org/download).
 
 During installation, the following options were selected:
 
