@@ -121,7 +121,5 @@ Each device VM connects to pfSense through its own dedicated VMware LAN Segment,
 - VMware Workstation Pro is free for personal use; no license purchase is required for this lab
 - pfSense must be powered on first and powered off last, since all other VMs depend on it for gateway routing and internet access
 - Each device VM has a single network adapter connected to its assigned LAN Segment, keeping it isolated from the other segments at the network layer
-- Static IP addressing is used throughout the lab instead of DHCP reservations, configured directly on each guest operating system
 - VMware LAN Segments are named to match their connected device (SOC-Lab-SIEM, SOC-Lab-Windows, SOC-Lab-Kali) for clarity when managing virtual network adapters in VMware
 - Kali Linux uses a prebuilt VMware VM image rather than a manual ISO install; pfSense, Ubuntu, and Windows are each installed manually from their official ISOs
-- Device purpose, rationale for tool/OS selection, and IP addressing justification are intentionally not covered in this document; they are reserved for the future architecture overview
