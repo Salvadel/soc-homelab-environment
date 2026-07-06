@@ -1,18 +1,6 @@
 # pfSense Setup
 
-This document covers the installation and configuration of the pfSense firewall virtual machine in the SOC homelab. pfSense sits at the network perimeter and routes traffic between three isolated internal LAN segments and the internet via VMware NAT. It provides network level visibility and routing that complements the endpoint level detection provided by Wazuh on the connected segments.
-
-## Why pfSense
-
-pfSense was chosen as the network firewall and router for this lab for the following reasons:
-
-**Open Source** - pfSense CE is completely free and open source with no licensing restrictions, making it suitable for homelab use without cost.
-
-**Enterprise Relevance** - pfSense is widely deployed in real enterprise environments, making it directly relevant to SOC and network engineering roles.
-
-**Network Segmentation** - pfSense allows each lab device to sit on its own isolated LAN segment with its own gateway, mirroring how real enterprise networks separate systems by function and trust level.
-
-**Controlled Internet Access** - pfSense provides controlled internet access through VMware NAT while keeping each internal LAN segment isolated from the host machine's physical network and from each other.
+This document covers the installation and configuration of the pfSense firewall virtual machine in the SOC homelab. pfSense sits at the network perimeter and routes traffic between three isolated internal LAN segments and the internet via VMware NAT. It provides network-level visibility and routing that complements the endpoint-level detection provided by Wazuh on the connected segments.
 
 ## VM Specifications
 
