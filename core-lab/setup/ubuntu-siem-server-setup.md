@@ -1,4 +1,4 @@
-# Ubuntu Server Setup
+# Ubuntu SIEM Server Setup
 
 This document covers the installation and configuration of the Ubuntu Server virtual machine in the SOC homelab. This VM hosts the Wazuh SIEM stack (Wazuh Manager, Wazuh Indexer, and Wazuh Dashboard). Full Wazuh installation and service configuration details are documented separately in [Wazuh Setup](wazuh-setup.md); this document covers the underlying operating system only.
 
