@@ -40,7 +40,7 @@ The default dashboard credentials were changed immediately after first login.
 
 ![Wazuh Login Page](../images/wazuh-dashboard-login.png)
 
-The screenshot below shows the Wazuh dashboard home page after successful login, confirming the full stack is operational.
+The screenshot below shows the Wazuh dashboard home page after successful login, confirming the full stack is operational. This screenshot was captured after the Windows 11 agent was deployed and had begun ingesting logs, so the dashboard reflects live agent data rather than a fresh, empty installation.
 
 ![Wazuh Dashboard Home](../images/wazuh-dashboard-home.png)
 
@@ -75,8 +75,8 @@ The Wazuh agent was deployed on the Windows 11 endpoint using a manual MSI insta
 
 The following commands were run in an elevated PowerShell session on the Windows 11 VM to download and install the agent:
 ```powershell
-Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.11.0-1.msi -OutFile $env:tmp\wazuh-agent.msi
-msiexec.exe /i $env:tmp\wazuh-agent.msi /q WAZUH_MANAGER='192.168.10.10'
+Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.14.4-1.msi -OutFile $env:tmp\wazuh-agent.msi
+msiexec.exe /i $env:tmp\wazuh-agent.msi /q WAZUH_MANAGER='192.168.10.10' WAZUH_AGENT_GROUP='default' WAZUH_AGENT_NAME='WIN11+LAB'
 ```
 
 Once installed, the agent service was started:
