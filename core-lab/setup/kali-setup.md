@@ -17,7 +17,7 @@ This document covers the setup and configuration of the Kali Linux virtual machi
 
 ## Installation
 
-Kali Linux was deployed using the prebuilt Kali Linux VMware virtual machine image rather than a manual ISO installation. The official Kali Linux VMware image can be downloaded from [The official Kali Linux website](https://www.kali.org/get-kali/#kali-virtual-machines).
+Kali Linux was deployed using the prebuilt Kali Linux VMware virtual machine image rather than a manual ISO installation. The official Kali Linux VMware image can be downloaded from [the official Kali Linux website](https://www.kali.org/get-kali/#kali-virtual-machines).
  
 The downloaded image was extracted, then opened directly in VMware Workstation Pro. No manual operating system installation steps were required. See [VMware Setup](vmware-setup.md) for VM hardware allocation.
  
