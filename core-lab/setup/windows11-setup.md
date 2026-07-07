@@ -19,7 +19,7 @@ This document covers the installation and configuration of the Windows 11 virtua
 
 Windows 11 Home was installed as a virtual machine in VMware Workstation Pro using the official Windows 11 ISO, obtained through the Microsoft Media Creation Tool at [the official Microsoft website](https://www.microsoft.com/software-download/windows11). See [VMware Setup](vmware-setup.md) for VM hardware allocation.
 
-During installation, a local account was created without linking to a Microsoft account, keeping the environment self contained and independent of any external services.
+During installation, a local account was created without linking to a Microsoft account, keeping the environment self-contained and independent of any external services.
 
 The screenshot below shows the Windows 11 desktop, confirming the VM is installed and operational.
 
@@ -55,6 +55,11 @@ A single local administrator account was created on the Windows 11 VM, with no M
 |---|---|
 | Administrator (Local) | Sole account used to operate and configure the endpoint |
 
+The account was confirmed using the following PowerShell command:
+```powershell
+Get-LocalUser
+```
+
 The screenshot below shows the account listed via PowerShell, confirming successful creation.
 
 ![Windows 11 User Accounts](../images/windows-users.png)
@@ -70,6 +75,11 @@ The Wazuh agent is installed and configured to forward Windows Event Logs and Sy
 ### Sysmon
 
 Sysmon is installed to significantly enhance the quality and detail of endpoint logs collected by the Wazuh agent. Full installation and configuration steps are documented in [Sysmon Setup](sysmon-setup.md).
+
+Both services were confirmed running using the following PowerShell command:
+```powershell
+Get-Service WazuhSvc, Sysmon64
+```
 
 The screenshot below shows both services running and confirmed active on the Windows 11 VM.
 
