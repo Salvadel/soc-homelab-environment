@@ -82,7 +82,7 @@ The screenshot below shows the Windows 11 VM hardware settings, confirming alloc
 
 ![Windows 11 VM Hardware Settings](../images/vmware-windows-vm-hardware.png)
 
-Full installation and Sysmon configuration steps are covered in the [Windows 11 Client Setup](windows-setup.md) document.
+Full installation and Sysmon configuration steps are covered in the [Windows 11 Setup](windows11-setup.md) document.
 
 ### Kali Linux (Attack Machine)
 
