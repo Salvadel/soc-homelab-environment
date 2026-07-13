@@ -9,7 +9,7 @@ Some components depend on others being in place first; follow this order when bu
 1. [VMware Setup](vmware-setup.md) - Installs VMware Workstation Pro on the host machine and provides an overview of every VM's resource allocation and network connectivity. This must be done first, since every other VM runs inside VMware.
 2. [pfSense Setup](pfsense-setup.md) - Installs and configures pfSense as the lab's router and firewall, establishing the three isolated LAN segments and internet access. Must be completed before any device VM is brought online, since all of them depend on pfSense for gateway routing.
 3. [Ubuntu Server Setup](ubuntu-setup.md) - Installs and configures the Ubuntu Server VM that later hosts the Wazuh SIEM stack, including static IP assignment. Covers the base operating system only.
-4. [Windows 11 Setup](windows-setup.md) - Installs and configures the Windows 11 VM that serves as the lab's target endpoint, including static IP assignment and user accounts.
+4. [Windows 11 Setup](windows11-setup.md) - Installs and configures the Windows 11 VM that serves as the lab's target endpoint, including static IP assignment and user accounts.
 5. [Kali Linux Setup](kali-setup.md) - Deploys the Kali Linux VM that serves as the lab's attack machine, including static IP assignment.
 6. [Wazuh Setup](wazuh-setup.md) - Installs the full Wazuh SIEM stack (manager, indexer, dashboard) on the Ubuntu Server VM and deploys the Wazuh agent to the Windows 11 endpoint. Requires Ubuntu Server and Windows 11 to already be set up.
 7. [Sysmon Setup](sysmon-setup.md) - Installs and configures Sysmon on the Windows 11 endpoint to enhance the detail of logs forwarded to Wazuh. Requires Windows 11 and the Wazuh agent to already be set up and reporting.
