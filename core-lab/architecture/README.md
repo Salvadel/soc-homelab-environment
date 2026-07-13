@@ -4,4 +4,4 @@ This folder explains the design decisions behind the SOC homelab, including devi
 
 - [Architecture Overview](architecture-overview.md) - why each device and technology was chosen, the full network topology and IP addressing scheme, and the network diagram
 
-Additional architecture documents will be added here as the lab expands with future projects.
+Additional architecture documents will be added here as needed as the lab expands with future projects.
