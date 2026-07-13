@@ -18,7 +18,7 @@ TheHive relies on three components, all installed on the Ubuntu Server SOAR host
 
 ## Installation
 
-TheHive was installed using the official StrangeBee installation script, which automates the deployment of all three stack components. The official installation guide can be found at [TheHive Installation Guide](https://docs.strangebee.com/thehive/installation/).
+TheHive was installed using the official StrangeBee installation script, which automates the deployment of all three stack components. The official installation guide can be found at [TheHive Installation Guide](https://docs.strangebee.com/thehive/installation/installation-guide-linux-standalone-server/).
 
 Run the following command on the Ubuntu Server SOAR host:
 ```bash
