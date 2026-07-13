@@ -4,7 +4,7 @@ This document covers the installation and configuration of Sysmon on the Windows
 
 ## Prerequisites
  
-Before installing Sysmon, the Windows 11 VM must be fully installed and configured, including static IP assignment and the Wazuh agent already installed and reporting to the Wazuh Manager. Full details are documented in [Windows 11 Setup](windows-setup.md).
+Before installing Sysmon, the Windows 11 VM must be fully installed and configured, including static IP assignment and the Wazuh agent already installed and reporting to the Wazuh Manager. Full details are documented in [Windows 11 Setup](windows11-setup.md).
 
 ## Download
 
