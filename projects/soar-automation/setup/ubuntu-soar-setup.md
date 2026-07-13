@@ -17,7 +17,7 @@ This document covers the installation and configuration of the Ubuntu Server vir
 
 ## Installation
 
-Ubuntu Server 24.04 LTS was installed as a virtual machine in VMware Workstation Pro using the official Ubuntu Server ISO, available at [https://ubuntu.com/download/server](https://ubuntu.com/download/server). This VM connects to pfSense through a new dedicated LAN segment, SOC-Lab-SOAR, on pfSense interface em5.
+Ubuntu Server 24.04 LTS was installed as a virtual machine in VMware Workstation Pro using the official Ubuntu Server ISO, available at [the official Ubuntu Server download](https://ubuntu.com/download/server). This VM connects to pfSense through a new dedicated LAN segment, SOC-Lab-SOAR, on pfSense interface em5.
 
 No desktop environment was installed, Ubuntu Server runs headless via terminal only, which reduces resource usage. During installation, the static IP, gateway, and DNS were configured directly through the installer's network configuration screen rather than editing netplan after the fact.
 
