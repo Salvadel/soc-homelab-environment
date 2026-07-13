@@ -1,6 +1,6 @@
 # Ubuntu Server Setup (SOAR)
 
-This document covers the installation and configuration of the Ubuntu Server virtual machine that hosts the SOAR stack in this project. This VM runs Shuffle for automated response workflows and TheHive for case management. Full installation and configuration details for each tool are documented separately in Shuffle Setup and TheHive Setup, this document covers the underlying operating system only.
+This document covers the installation and configuration of the Ubuntu Server virtual machine that hosts the SOAR stack in this project. This VM runs Shuffle for automated response workflows and TheHive for case management. Full installation and configuration details for each tool are documented separately in [Shuffle Setup](shuffle-setup.md) and [TheHive Setup](thehive-setup.md), this document covers the underlying operating system only.
 
 ## VM Specifications
 
@@ -79,8 +79,8 @@ This confirms the SOAR server can reach the gateway. If this fails, no outbound 
 - Ubuntu Server runs headless with no desktop environment installed, reducing RAM and CPU overhead and leaving more resources available for the SOAR stack
 - 20GB RAM and 4 CPUs were allocated to meet the concurrent resource requirements of running TheHive and Shuffle on the same VM
 - 80GB storage was allocated to accommodate TheHive case data and Docker container storage accumulation over time
-- Docker installation is covered in the Shuffle Setup document, since Docker exists specifically to support running Shuffle
-- Full Shuffle installation and configuration is covered in the Shuffle Setup document
-- Full TheHive installation and configuration is covered in the TheHive Setup document
+- Docker installation is covered in the [Shuffle Setup](shuffle-setup.md) document, since Docker exists specifically to support running Shuffle
+- Full Shuffle installation and configuration is covered in [Shuffle Setup](shuffle-setup.md)
+- Full TheHive installation and configuration is covered in [TheHive Setup](thehive-setup.md)
 - Internet access through pfSense is required for system updates, Docker installation, Slack notification delivery, and IOC enrichment queries once configured
 - The local username on this VM is `soarsadmin`
