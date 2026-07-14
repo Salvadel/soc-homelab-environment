@@ -14,13 +14,13 @@ This project added a new dedicated network segment, SOC-Lab-SOAR (192.168.40.0/2
 
 ![SOAR Data Flow Diagram](../images/soar-data-flow-diagram.png)
 
-This diagram shows how a single Wazuh alert moves through the automation pipeline: Wazuh forwards a qualifying alert to Shuffle via webhook, Shuffle queries VirusTotal and AbuseIPDB in parallel to enrich the alert with threat intelligence, Shuffle creates a case in TheHive using the enriched data, and Shuffle sends a Slack notification referencing the newly created case. Full technical detail for each step is documented in [Shuffle Setup](../setup/shuffle-setup.md).
+This diagram shows how a single Wazuh alert moves through the automation pipeline: Wazuh forwards a qualifying alert to Shuffle via webhook, Shuffle queries VirusTotal and AbuseIPDB in parallel to enrich the alert with threat intelligence, Shuffle creates a case in TheHive using the enriched data, and Shuffle sends a Slack notification referencing the newly created case. Full technical details for each step is documented in [Shuffle Setup](../setup/shuffle-setup.md).
 
 ## Project Topology Summary
 
 | Device / Interface | Role | VMware LAN Segment | Subnet | Static IP | Gateway |
 |---|---|---|---|---|---|
-| pfSense (LAN40) | Router / Firewall (project expansion) | SOC-Lab-SOAR | 192.168.40.0/24 | 192.168.40.1 | N/A |
+| pfSense (LAN40) | Router / Firewall | SOC-Lab-SOAR | 192.168.40.0/24 | 192.168.40.1 | N/A |
 | Ubuntu Server (SOAR) | SOAR Server (Shuffle / TheHive) | SOC-Lab-SOAR | 192.168.40.0/24 | 192.168.40.40 | 192.168.40.1 |
 
 ## Why a Dedicated SOAR Segment
