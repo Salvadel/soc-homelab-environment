@@ -2,8 +2,6 @@
 
 This project adds security orchestration, automation, and response (SOAR) capabilities on top of the core lab. It automates the SOC analyst's response to Wazuh alerts: enriching them with threat intelligence, creating a tracked case, and notifying the analyst, without manual intervention. The stack consists of a dedicated Ubuntu Server VM running Shuffle for workflow automation and TheHive for case management, connected to the core lab's existing Wazuh SIEM.
 
-This project assumes the core lab (pfSense, the Wazuh SIEM, and the Windows 11 endpoint) is already fully built and operational.
-
 ## Prerequisites
 
 This project builds on top of the core lab and does not stand on its own. Before starting, make sure the [Core Lab](../../core-lab/README.md) is fully built and operational, specifically pfSense, the Wazuh SIEM, and the Windows 11 endpoint, since this project's Wazuh integration depends on the core lab's Wazuh Manager already being installed and running.
