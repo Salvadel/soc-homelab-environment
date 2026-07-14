@@ -1,6 +1,6 @@
 # Setup
 
-This folder contains step-by-step installation and configuration guides for every component in the SOAR automation project. Each document is scoped to a single component so it stays focused and reusable if that component is ever redeployed on its own. Rationale for why each technology was chosen is documented separately in the [Architecture Overview](../architecture/architecture-overview.md); these guides cover the "how," not the "why."
+This folder contains step-by-step installation and configuration guides for every component in the SOAR automation project. Each document is scoped to a single component so it stays focused and reusable if that component is ever redeployed on its own. Rationale for why each technology was chosen is documented separately in the [Architecture Overview](../architecture/soar-architecture-overview.md); these guides cover the "how," not the "why."
 
 **Note: some images shown in the setup file are outdated based on a previous iteration of the lab and will be updated shortly**
 
