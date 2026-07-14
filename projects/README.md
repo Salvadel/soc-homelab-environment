@@ -6,13 +6,13 @@ This project assumes the core lab (pfSense, the Wazuh SIEM, and the Windows 11 e
 
 ## Prerequisites
 
-This project builds on top of the core lab and does not stand on its own. Before starting, make sure the [Core Lab](../../core-lab/README.md) is fully built and operational, specifically pfSense, the Wazuh SIEM, and the Windows 11 endpoint, since this project's Wazuh integration depends on the core lab's Wazuh Manager already being installed and running.
+This project builds on top of the core lab and does not stand on its own. Before starting, make sure the [Core Lab](../core-lab/README.md) is fully built and operational, specifically pfSense, the Wazuh SIEM, and the Windows 11 endpoint, since this project's Wazuh integration depends on the core lab's Wazuh Manager already being installed and running.
 
 ## Network Diagram
 
 ![SOAR Automation Network Diagram](soar-automation/images/soar-automation-diagram.png)
 
-This project added a new dedicated network segment, SOC-Lab-SOAR, to the existing pfSense VM to keep the SOAR stack isolated from the core lab's monitored segments. Full rationale for this design is documented in the [Architecture Overview](architecture/soar-architecture-overview.md).
+This project added a new dedicated network segment, SOC-Lab-SOAR, to the existing pfSense VM to keep the SOAR stack isolated from the core lab's monitored segments. Full rationale for this design is documented in the [Architecture Overview](soar-automation/architecture/soar-architecture-overview.md).
 
 ## Data Flow Diagram
 
