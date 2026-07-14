@@ -10,13 +10,13 @@ This project builds on top of the core lab and does not stand on its own. Before
 
 ## Network Diagram
 
-![SOAR Automation Network Diagram](images/soar-automation-diagram.png)
+![SOAR Automation Network Diagram](soar-automation/images/soar-automation-diagram.png)
 
 This project added a new dedicated network segment, SOC-Lab-SOAR, to the existing pfSense VM to keep the SOAR stack isolated from the core lab's monitored segments. Full rationale for this design is documented in the [Architecture Overview](architecture/soar-architecture-overview.md).
 
 ## Data Flow Diagram
 
-![SOAR Data Flow Diagram](images/soar-data-flow-diagram.png)
+![SOAR Data Flow Diagram](soar-automation/images/soar-data-flow-diagram.png)
 
 This diagram shows how a single Wazuh alert moves through the automation pipeline, from webhook trigger through IOC enrichment, case creation, and Slack notification. Full technical detail is documented in [Shuffle Setup](setup/shuffle-setup.md).
 
