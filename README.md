@@ -4,9 +4,10 @@ A home Security Operations Center (SOC) lab designed for simulating real-world t
 
 This repository is organized into two top-level areas: the **core lab**, a fixed baseline environment (pfSense, Wazuh SIEM, target endpoint, attack machine), and **projects**, self-contained additions that build on top of the core lab over time.
 
-## Network Diagram
+## Where to Start
 
-![Core Lab Network Diagram](core-lab/images/core-lab-diagram.png)
+- **[Core Lab](core-lab/README.md)** - the baseline environment. Start here to build the lab from scratch: pfSense, the Wazuh SIEM, the Windows 11 target endpoint, and the Kali attack machine.
+- **[Projects](projects/README.md)** - self-contained additions built on top of the core lab, each documenting its own architecture, setup, and outcomes.
 
 ## Technologies Used
 
@@ -26,6 +27,13 @@ This repository is organized into two top-level areas: the **core lab**, a fixed
 | VirusTotal | IOC enrichment, IP, hash, and URL reputation lookups |
 | AbuseIPDB | IOC enrichment, IP reputation and abuse reporting |
 
+## Current Projects
+
+| Project | Status | Overview |
+|---|---|---|
+| [SOAR Automation](projects/soar-automation/README.md) | Complete | Adds security orchestration and automated response on top of the core lab, enriching Wazuh alerts with threat intelligence, creating cases in TheHive, and sending Slack notifications, using Shuffle |
+| SIEM Log Investigation | In Progress | Documentation not yet available |
+
 ## Repository Structure
 
 ```
@@ -34,43 +42,10 @@ soc-homelab/
 ├── core-lab/
 │   ├── README.md
 │   ├── architecture/
-│   │   ├── README.md
-│   │   └── architecture-overview.md
 │   ├── setup/
-│   │   ├── README.md
-│   │   ├── vmware-setup.md
-│   │   ├── pfsense-setup.md
-│   │   ├── ubuntu-setup.md
-│   │   ├── windows-setup.md
-│   │   ├── kali-setup.md
-│   │   ├── wazuh-setup.md
-│   │   └── sysmon-setup.md
 │   └── images/
 └── projects/
     ├── README.md
     ├── soar-automation/
-    │   ├── README.md
-    │   ├── architecture/
-    │   │   ├── README.md
-    │   │   └── soar-architecture-overview.md
-    │   ├── setup/
-    │   │   ├── README.md
-    │   │   ├── ubuntu-soar-setup.md
-    │   │   ├── thehive-setup.md
-    │   │   └── shuffle-setup.md
-    │   └── images/
     └── siem-log-investigation/
-        └── (in progress)
 ```
-
-## Where to Start
-
-- **[Core Lab](core-lab/README.md)** - the baseline environment. Start here to build the lab from scratch: pfSense, the Wazuh SIEM, the Windows 11 target endpoint, and the Kali attack machine.
-- **[Projects](projects/README.md)** - self-contained additions built on top of the core lab, each documenting its own architecture, setup, and outcomes.
-
-## Current Projects
-
-| Project | Status | Overview |
-|---|---|---|
-| [SOAR Automation](projects/soar-automation/README.md) | Complete | Adds security orchestration and automated response on top of the core lab, enriching Wazuh alerts with threat intelligence, creating cases in TheHive, and sending Slack notifications, using Shuffle |
-| SIEM Log Investigation | In Progress | Documentation not yet available |
