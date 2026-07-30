@@ -7,7 +7,7 @@ This repository is organized into two top-level areas: the **core lab**, a fixed
 ## Where to Start
 
 - **[Core Lab](core-lab/README.md)** - the baseline environment. Start here to build the lab from scratch: pfSense, the Wazuh SIEM, the Windows 11 target endpoint, and the Kali attack machine.
-- **[Projects](projects/README.md)** - self-contained additions built on top of the core lab, each documenting its own architecture, setup, and outcomes.
+- **[Projects](projects/)** - self-contained additions built on top of the core lab, each documenting its own architecture, setup, and outcomes.
 
 ## Current Projects
 
