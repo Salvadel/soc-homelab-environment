@@ -26,4 +26,4 @@ projects/<project-name>/
     └── (screenshots and diagrams referenced throughout the project's documentation)
 ```
 
-** Note: Every project assumes the [Core Lab](../core-lab/README.md) is already fully built and operational, and should state any additional prerequisites specific to that project in its own README. **
+**Note: Every project assumes the [Core Lab](../core-lab/README.md) is already fully built and operational, and should state any additional prerequisites specific to that project in its own README.**
