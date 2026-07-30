@@ -9,6 +9,13 @@ This repository is organized into two top-level areas: the **core lab**, a fixed
 - **[Core Lab](core-lab/README.md)** - the baseline environment. Start here to build the lab from scratch: pfSense, the Wazuh SIEM, the Windows 11 target endpoint, and the Kali attack machine.
 - **[Projects](projects/README.md)** - self-contained additions built on top of the core lab, each documenting its own architecture, setup, and outcomes.
 
+## Current Projects
+
+| Project | Status | Overview |
+|---|---|---|
+| [SOAR Automation](projects/soar-automation/README.md) | Complete | Adds security orchestration and automated response on top of the core lab, enriching Wazuh alerts with threat intelligence, creating cases in TheHive, and sending Slack notifications, using Shuffle |
+| SIEM Log Investigation | In Progress | Documentation not yet available |
+
 ## Technologies Used
 
 | Technology | Role |
@@ -26,13 +33,6 @@ This repository is organized into two top-level areas: the **core lab**, a fixed
 | Slack | Analyst notification platform integrated with Shuffle |
 | VirusTotal | IOC enrichment, IP, hash, and URL reputation lookups |
 | AbuseIPDB | IOC enrichment, IP reputation and abuse reporting |
-
-## Current Projects
-
-| Project | Status | Overview |
-|---|---|---|
-| [SOAR Automation](projects/soar-automation/README.md) | Complete | Adds security orchestration and automated response on top of the core lab, enriching Wazuh alerts with threat intelligence, creating cases in TheHive, and sending Slack notifications, using Shuffle |
-| SIEM Log Investigation | In Progress | Documentation not yet available |
 
 ## Repository Structure
 
