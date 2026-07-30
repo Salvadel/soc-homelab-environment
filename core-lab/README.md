@@ -8,6 +8,15 @@ This is the core SOC homelab: a cybersecurity learning environment built for han
 
 Full rationale for this design, including why each device and technology was chosen and how the network is addressed, is documented in the [Architecture Overview](architecture/architecture-overview.md).
 
+## Getting Started
+
+To build this lab from scratch, start with the [Setup Guide Index](setup/README.md), which lists every component in the order it should be installed. For the reasoning behind the lab's design before diving into setup, start with the [Architecture Overview](architecture/architecture-overview.md) instead.
+
+## Quick Links
+
+- [Architecture Overview](architecture/architecture-overview.md) - device rationale, network topology, and IP addressing scheme
+- [Setup Guide Index](setup/README.md) - recommended install order and a summary of every component's purpose
+
 ## Repository Structure
 
 ```
@@ -32,12 +41,3 @@ core-lab/
 - **architecture/** - explains why the lab is designed the way it is: device rationale, network segmentation, and IP addressing
 - **setup/** - step by step installation and configuration guides for every component in the lab
 - **images/** - all screenshots and diagrams referenced across the documentation
-
-## Quick Links
-
-- [Architecture Overview](architecture/architecture-overview.md) - device rationale, network topology, and IP addressing scheme
-- [Setup Guide Index](setup/README.md) - recommended install order and a summary of every component's purpose
-
-## Getting Started
-
-To build this lab from scratch, start with the [Setup Guide Index](setup/README.md), which lists every component in the order it should be installed. For the reasoning behind the lab's design before diving into setup, start with the [Architecture Overview](architecture/architecture-overview.md) instead.
