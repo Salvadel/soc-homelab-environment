@@ -16,6 +16,7 @@ Each project should follow this structure:
 ```
 projects/<project-name>/
 ├── README.md
+├── execution.md (validates project workflow and objectives)
 ├── architecture/
 │   ├── README.md
 │   └── <project-name>-architecture-overview.md
