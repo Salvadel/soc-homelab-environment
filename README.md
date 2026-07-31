@@ -13,8 +13,8 @@ This repository is organized into two top-level areas: the **core lab**, a fixed
 
 | Project | Status | Overview |
 |---|---|---|
-| [SOAR Automation](projects/soar-automation/README.md) | Complete | Adds security orchestration and automated response on top of the core lab, enriching Wazuh alerts with threat intelligence, creating cases in TheHive, and sending Slack notifications, using Shuffle |
-| SIEM Log Investigation | In Progress | Documentation not yet available |
+| [SOAR Automation](projects/soar-automation/README.md) | In Progress | Adds security orchestration and automated response on top of the core lab, enriching Wazuh alerts with threat intelligence, creating cases in TheHive, and sending Slack notifications, using Shuffle |
+| AWS Wazuh Log Ingestion | In Progress | Documentation not yet available |
 
 ## Technologies Used
 
