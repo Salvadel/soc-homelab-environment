@@ -6,8 +6,8 @@ This folder holds every project that expands on the core lab. Each project lives
 
 | Project | Status | Overview |
 |---|---|---|
-| [SOAR Automation](soar-automation/README.md) | Complete | Adds security orchestration and automated response on top of the core lab. Automates the SOC analyst's response to Wazuh alerts by enriching them with threat intelligence, creating a case in TheHive, and sending a Slack notification, using Shuffle. |
-| SIEM Log Investigation | In Progress | Documentation not yet started. |
+| [SOAR Automation](soar-automation/README.md) | In Progress | Adds security orchestration and automated response on top of the core lab. Automates the SOC analyst's response to Wazuh alerts by enriching them with threat intelligence, creating a case in TheHive, and sending a Slack notification, using Shuffle. |
+| AWS Wazuh Log Ingestion | In Progress | Documentation not yet started. |
 
 ## Adding a New Project
 
