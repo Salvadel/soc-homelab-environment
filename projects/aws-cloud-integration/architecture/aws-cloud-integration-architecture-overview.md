@@ -1,12 +1,12 @@
 # Architecture Overview
 
-This document explains the design decisions behind the AWS Cloud Integration project: why each technology was chosen, how the network is structured and addressed, and how all components communicate with each other. Step-by-step installation and configuration for each component is documented separately in the [setup](../setup/) folder.
+This document explains the design decisions behind the AWS Cloud Integration project: why each technology was chosen, how the network is structured and addressed, and how all components communicate with each other. Step-by-step installation and configuration for each component is documented separately in the [setup](../setup/README.md) folder.
 
 ## Network Diagram
 
 ![AWS Cloud Integration Network Architecture](../images/aws-integration-network-architecture-diagram.png)
 
-This project extends the core SOC homelab with a hybrid on-prem/cloud monitoring capability. An AWS EC2 instance is deployed as a cloud target, connected back to the home network over a WireGuard VPN tunnel through pfSense, and monitored by the existing home Wazuh manager. An attack is simulated against the EC2 instance from Kali Linux to validate that the home SIEM can detect activity on a cloud hosted endpoint the same way it detects activity on-prem.
+This project extends the core SOC homelab with a hybrid on-prem/cloud monitoring capability. An AWS EC2 instance is deployed as a cloud target, connected back to the home network over a WireGuard VPN tunnel through pfSense, and monitored by the existing home Wazuh manager. An attack is simulated against the EC2 instance from Kali Linux to validate that the home SIEM can detect activity on a cloud-hosted endpoint the same way it detects activity on-prem.
 
 | Device | Role | Location | Subnet | Address | Gateway / Peer |
 |---|---|---|---|---|---|
