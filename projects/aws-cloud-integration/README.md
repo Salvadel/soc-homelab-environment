@@ -12,7 +12,7 @@ To build this project, start with the [Setup Guide Index](setup/README.md), whic
 
 ## Network Diagram
 
-![AWS Cloud Integration Network Architecture](images/aws-integration-network-architecture-diagram.png)
+![AWS Cloud Integration Network Architecture](images/aws-cloud-integration-network-diagram.png)
 
 This project added a new WireGuard tunnel interface, WG_AWS, to the existing pfSense VM, bridging a cloud-hosted EC2 instance back to the home network's SIEM subnet. Full rationale for this design is documented in the [Architecture Overview](architecture/aws-cloud-integration-architecture-overview.md).
 
