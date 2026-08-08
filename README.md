@@ -13,6 +13,7 @@ This repository is organized into two top-level areas: the **core lab**, a fixed
 
 | Project | Status | Overview |
 |---|---|---|
+| [Wazuh Detection Engineering & Monitoring](wazuh-detection-engineering-and-monitoring/) | In Progress | Tuned Wazuh SIEM detections, alerts, dashboards, and log collection to improve security monitoring, reduce alert noise, and support efficient incident investigation. |
 | [SOAR Automation](projects/soar-automation/README.md) | In Progress | Adds security orchestration and automated response on top of the core lab, enriching Wazuh alerts with threat intelligence, creating cases in TheHive, and sending Slack notifications, using Shuffle |
 | [AWS Cloud Integration](aws-cloud-integration/README.md) | Complete | Extends the core lab's Wazuh SIEM to monitor a cloud-hosted AWS EC2 instance, connected back to the home network over an encrypted WireGuard tunnel. A simulated attack from Kali Linux proves the SIEM detects and attributes activity against the cloud endpoint the same way it does on-prem. |
 
@@ -49,6 +50,8 @@ soc-homelab/
 │   └── images/
 └── projects/
     ├── README.md
+    ├── wazuh-detection-engineering-and-monitoring/
     ├── soar-automation/
     └── aws-cloud-integration/
+
 ```
