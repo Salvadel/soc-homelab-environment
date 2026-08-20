@@ -43,6 +43,8 @@ python3 password_spray.py
 
 6. Check the investigation's README for the specific event IDs, expected event count, and any script-specific flags before starting the analysis
 
+***Note: the script can take a long time to run depending on the resources allocated and the speed of your machine, may take multiple hours***
+
 ## Investigations
 
 | # | Investigation | MITRE Technique | Status |
