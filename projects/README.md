@@ -6,7 +6,7 @@ This folder holds every project that expands on the core lab. Each project lives
 
 | Project | Status | Overview |
 |---|---|---|
-| [Wazuh Detection Engineering & Monitoring](wazuh-detection-engineering-and-monitoring/) | In Progress | Tuned Wazuh SIEM detections, alerts, dashboards, and log collection to improve security monitoring, reduce alert noise, and support efficient incident investigation. |
+| [Wazuh Investigations](wazuh-investigations/) | In Progress | A series of Kali attack simulations against a Windows 11 lab host, investigated in Wazuh SIEM, documented, and mapped to MITRE ATT&CK techniques. |
 | [SOAR Automation](soar-automation/README.md) | In Progress | Adds security orchestration and automated response on top of the core lab. Automates the SOC analyst's response to Wazuh alerts by enriching them with threat intelligence, creating a case in TheHive, and sending a Slack notification, using Shuffle. |
 | [AWS Cloud Integration](aws-cloud-integration/README.md) | Complete | Extends the core lab's Wazuh SIEM to monitor a cloud-hosted AWS EC2 instance, connected back to the home network over an encrypted WireGuard tunnel. A simulated attack from Kali Linux proves the SIEM detects and attributes activity against the cloud endpoint the same way it does on-prem. |
 
