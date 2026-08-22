@@ -48,7 +48,7 @@ python3 password_spray.py
 ## Investigations
 
 | # | Investigation | # of Logs | MITRE Technique | Status |
-|---|---|---|---|
+|---|---|---|---|---|
 | 01 | [Password Spraying](./password-spraying/) | 4,750 | T1110 & T1110.003, Brute Force: Password Spraying | Completed |
 
 More investigations will be added here as they are completed. The plan is for around 10 total, covering different attack techniques and detection scenarios.
