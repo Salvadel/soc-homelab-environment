@@ -14,14 +14,14 @@ See [password-spraying](./README.md) for how the attack is reproduced.
 
 The starting point was the Discover view in Wazuh, which showed a high volume of alerts, *4,813 hits*, over the last several hours with no filtering applied yet.
 
-![Wazuh Discover initial view](../images/wazuh-discover-alert-overview.png)
+![Wazuh Discover initial view](images/wazuh-discover-alert-overview.png)
 
 **1. Spotting the spike**
 
 Rather than scroll through raw alerts, a line visualization was built using a date histogram on timestamp, filtered to manager.name: siemserver and rule.level between 0 and 16 so the full range of alert severities would be included. That visualization showed a clear, sustained spike in alert volume.
 
-![Filter used for rule level](../images/wazuh-filter-rule-level.png)
-![Large spike in alerts](../images/wazuh-visualize-alert-spike.png)
+![Filter used for rule level](images/wazuh-filter-rule-level.png)
+![Large spike in alerts](images/wazuh-visualize-alert-spike.png)
 
 **2. Narrowing the time frame**
 
@@ -31,52 +31,52 @@ The spike was isolated to roughly *20:00 to 22:15* on August 19, so the Discover
 
 The field data.win.eventdata.ipAddress was added to the table to break the alerts down by source.
 
-![Selecting the ipAddress field](../images/wazuh-discover-select-ipaddress-field.png)
+![Selecting the ipAddress field](images/wazuh-discover-select-ipaddress-field.png)
 
 **4. Identifying the source**
 
 The top values for that field showed *192.168.30.30* accounted for *98.8%* of the alerts carrying that field, immediately pointing the investigation at that single source.
 
-![Top values for ipAddress](../images/wazuh-field-topvalues-ipaddress.png)
+![Top values for ipAddress](images/wazuh-field-topvalues-ipaddress.png)
 
 **5. Reviewing the raw alerts**
 
 Expanding individual alerts from that source showed Event ID *4625*, authentication package NTLM, logon type 3 (network logon), and failure reason "Unknown user name or bad password" (status *0xC000006D*, sub status *0xC0000064*), with the source network address confirmed as 192.168.30.30.
 
-![Expanded 4625 event detail](../images/wazuh-event-expanded-4625-detail.png)
-![Windows event log detail for 4625](../images/windows-eventlog-4625-detail.png)
+![Expanded 4625 event detail](images/wazuh-event-expanded-4625-detail.png)
+![Windows event log detail for 4625](images/windows-eventlog-4625-detail.png)
 
 **6. Checking which accounts were targeted**
 
 Sorting by data.win.eventdata.targetUserName showed the failed logons were spread evenly across roughly *25 different accounts*, each accounting for about *4%* of the activity, including generic and service style names such as info, temp, qa, dev, marketing, backup, dbadmin, helpdesk, and admin. A bar chart of the same field confirmed each targeted username received a near-identical count of attempts, around *190 to 200 each*.
 
-![Top values for targetUserName](../images/wazuh-field-topvalues-targetusername.png)
-![Targeted usernames distribution](../images/wazuh-visualize-targetusername-distribution.png)
+![Top values for targetUserName](images/wazuh-field-topvalues-targetusername.png)
+![Targeted usernames distribution](images/wazuh-visualize-targetusername-distribution.png)
 
 **7. Checking the MITRE mapping field**
 
 Wazuh's built-in rule.mitre.id field showed *85.6%* of alerts tagged as *T1531* (Account Access Removal) and *13.4%* tagged as *T1110* (Brute Force), with small remainders for *T1078*, *T1484*, and *T1546.011*. The T1531 tagging lines up with the account lockout events generated once individual accounts crossed their lockout threshold from repeated bad passwords; it reflects a side effect of the spray rather than a deliberate attempt by the attacker to lock anyone out.
 
-![Top values for MITRE technique ID](../images/wazuh-field-topvalues-mitre-id.png)
+![Top values for MITRE technique ID](images/wazuh-field-topvalues-mitre-id.png)
 
 **8. Checking Windows Event IDs**
 
 The data.win.system.eventID field showed *95.4%* Event ID *4625* (failed logon), and small percentages of *4624* (successful logon, *1.2%*), *4634* (logoff, *1.2%*), *4740* (account locked out, *1.2%*), and *4672* (special privileges assigned to new logon, *0.6%*).
 
-![Top values for Windows Event ID](../images/wazuh-field-topvalues-eventid.png)
+![Top values for Windows Event ID](images/wazuh-field-topvalues-eventid.png)
 
 **9. Investigating the successful logons**
 
 Filtering directly on Event ID 4624 returned only *6 hits total* across the entire search window. All 6 were timestamped *23:14 to 23:15* on August 19, over an hour after the attack window closed, all sourced from *127.0.0.1* rather than 192.168.30.30, and all against the Admin account. No 4624 event was ever recorded from the attacker's IP during the *20:00 to 22:15* attack window itself.
 
-![All 4624 successful logons](../images/wazuh-discover-4624-successful-logons.png)
+![All 4624 successful logons](images/wazuh-discover-4624-successful-logons.png)
 
 **10. Ruling out remaining leads**
 
 The source port field (data.win.eventdata.ipPort) was checked for any pattern and showed only scattered ephemeral ports with no useful signal, so it was ruled out as a lead. After filtering out the 4625 failed logons, the unrelated 4624 successes just discussed, and other non meaningful housekeeping events, no further alerts of interest remained in the window.
 
-![Port field, no useful pattern](../images/wazuh-field-topvalues-ipport.png)
-![Attack window dominated by repeated 192.168.30.30 alerts](../images/wazuh-discover-attack-window-source-ip.png)
+![Port field, no useful pattern](images/wazuh-field-topvalues-ipport.png)
+![Attack window dominated by repeated 192.168.30.30 alerts](images/wazuh-discover-attack-window-source-ip.png)
 
 ## Findings
 
@@ -115,8 +115,8 @@ Wazuh's automatic tagging split most alerts across *T1531* and *T1110* as descri
 - Review and reduce the generic and default local accounts available to be targeted (test, temp, qa, guest, and similar) where they are not actually needed
 - Tune the account lockout threshold and duration so it still deters spraying without creating an easy denial of service condition against legitimate users
 
-![Failed login visualization built for the dashboard](../images/wazuh-visualize-failed-login-panel.png)
-![Failed login panel saved to the dashboard](../images/wazuh-dashboard-failed-login-panel-saved.png)
+![Failed login visualization built for the dashboard](images/wazuh-visualize-failed-login-panel.png)
+![Failed login panel saved to the dashboard](images/wazuh-dashboard-failed-login-panel-saved.png)
 
 ## Conclusion
 
