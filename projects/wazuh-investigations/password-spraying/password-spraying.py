@@ -29,15 +29,12 @@ USERNAMES = [
     "sales", "marketing", "dev", "qa", "temp", "info", "admin",
 ]
 
-REAL_ACCOUNT = "admin"
-REAL_PASSWORD = "44685"
-
 
 def build_password_list():
-    """Build 99 decoy passwords plus the real credential appended last.
+    """Build 100 decoy passwords.
 
-    Real credential is placed last, and REAL_ACCOUNT is last in USERNAMES,
-    so the final attempt of the run lands on the genuine admin:44685 login.
+    No real credential is included, so the script does not intentionally
+    authenticate successfully.
     """
     bases = [
         "password", "welcome", "letmein", "changeme", "qwerty",
@@ -53,13 +50,12 @@ def build_password_list():
             candidate = f"{base}{suffix}"
             if candidate not in decoys:
                 decoys.append(candidate)
-            if len(decoys) >= 99:
+            if len(decoys) >= 100:
                 break
-        if len(decoys) >= 99:
+        if len(decoys) >= 100:
             break
 
-    decoys = decoys[:99]
-    return decoys + [REAL_PASSWORD]
+    return decoys[:100]
 
 
 def attempt_login(target, username, password):
