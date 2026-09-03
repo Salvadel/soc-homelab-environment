@@ -26,9 +26,9 @@ cd wazuh-investigations/<investigation-folder>
 2. Confirm the attack script for that investigation is present in the folder
 
 3. Run the script using Python 3 from Kali Linux
+python3 /path-to-file
 
 ```
-python3 /path-to-file
 ```
 
 Example
@@ -49,6 +49,7 @@ python3 password_spray.py
 
 | # | Investigation | # of Logs | MITRE Technique | Status |
 |---|---|---|---|---|
-| 01 | [Password Spraying](./password-spraying/) | 4,750 | T1110 & T1110.003, Brute Force: Password Spraying | Completed |
+| 01 | [Password Spraying](./password-spraying/) | ~4,750 | T1110 & T1110.003, Brute Force: Password Spraying | Completed |
+| 02 | [Living off the Land](./living-off-the-land/) | ~1,000 | T1546.001, Event Triggered Execution: Application Shimming | Completed |
 
 ***More investigations will be added here as they are completed. The plan is for around 10 total, covering different attack techniques and detection scenarios.***
